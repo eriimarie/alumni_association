@@ -1,10 +1,15 @@
 <template>
-  <div>Register Page</div>
+  <div><userInfo></userInfo></div>
 </template>
 
+
+
 <script>
+import userInfo from "@/views/registerPage/components/userInfo";
 export default {
-  name: "Register"
+  components:{
+    userInfo:userInfo
+  }
 }
 </script>
 

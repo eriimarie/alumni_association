@@ -10,7 +10,8 @@
 
         <!-- Right aligned nav items -->
         <b-navbar-nav class="ml-auto">
-          <b-nav-item href="/forum">Forum</b-nav-item>
+          <b-nav-item href="/news">News</b-nav-item>
+          <b-nav-item href="/events">Events</b-nav-item>
           <b-nav-item href="/shopping">Market</b-nav-item>
           <b-nav-item href="/donate"><b-button size="sm" class="my-2 my-sm-0" type="submit">Donate</b-button></b-nav-item>
 

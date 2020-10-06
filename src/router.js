@@ -1,13 +1,14 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 import donatePage from './views/donatePage/Donate';
-import forumPage from './views/forumPage/Forum';
+import eventsPage from './views/eventsPage/Events';
 import loginPage from './views/loginPage/Login';
 import profilePage from './views/profilePage/Profile';
 import registerPage from './views/registerPage/Register';
 import shoppingCartPage from './views/shoppingCartPage/ShoppingCart';
 import shoppingPage from './views/shoppingPage/Shopping';
 import mainPage from './views/mainPage/Main';
+import newsPage from './views/newsPage/News';
 
 Vue.use(Router);
 
@@ -20,8 +21,8 @@ const router = new Router({
             component: donatePage,
         },
         {
-            path: '/forum',
-            component: forumPage,
+            path: '/events',
+            component: eventsPage,
         },
         {
             path: '/login',
@@ -42,6 +43,10 @@ const router = new Router({
         {
             path: '/shopping',
             component: shoppingPage,
+        },
+        {
+            path: '/news',
+            component: newsPage,
         },
         {
             path: '/index',
