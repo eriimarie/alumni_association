@@ -1,14 +1,15 @@
-import Vue from 'vue';
-import Router from 'vue-router';
-import donatePage from './views/donatePage/Donate';
-import eventsPage from './views/eventsPage/Events';
-import loginPage from './views/loginPage/Login';
-import profilePage from './views/profilePage/Profile';
-import registerPage from './views/registerPage/Register';
-import shoppingCartPage from './views/shoppingCartPage/ShoppingCart';
-import shoppingPage from './views/shoppingPage/Shopping';
-import mainPage from './views/mainPage/Main';
-import newsPage from './views/newsPage/News';
+import Vue from 'vue'
+import Router from 'vue-router'
+import donatePage from './views/donatePage/Donate'
+import eventsPage from './views/eventsPage/Events'
+import loginPage from './views/loginPage/Login'
+import profilePage from './views/profilePage/Profile'
+import registerPage from './views/registerPage/Register'
+import shoppingCartPage from './views/shoppingCartPage/ShoppingCart'
+import shoppingPage from './views/shoppingPage/Shopping'
+import mainPage from './views/mainPage/Main'
+import newsPage from './views/newsPage/News'
+
 
 Vue.use(Router);
 
@@ -23,6 +24,9 @@ const router = new Router({
         {
             path: '/events',
             component: eventsPage,
+        },
+        {
+            path:'/user',
         },
         {
             path: '/login',

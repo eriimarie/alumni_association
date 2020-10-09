@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div id="box">
     <b-navbar toggleable="lg" type="dark" variant="info">
       <b-navbar-brand href="/index">image</b-navbar-brand>
 
@@ -46,5 +46,8 @@ export default {
 </script>
 
 <style scoped>
-
+  #box{
+    max-width: 1200px;
+    margin: 0 auto;
+  }
 </style>

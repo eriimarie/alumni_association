@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div id="box">
     <b-carousel
         id="carousel-1"
         v-model="slide"
@@ -65,5 +65,8 @@ export default {
 </script>
 
 <style scoped>
-
+  #box{
+    max-width: 1200px;
+    margin: 0 auto;
+  }
 </style>
