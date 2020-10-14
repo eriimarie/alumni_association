@@ -9,6 +9,11 @@ import shoppingCartPage from './views/shoppingCartPage/ShoppingCart'
 import shoppingPage from './views/shoppingPage/Shopping'
 import mainPage from './views/mainPage/Main'
 import newsPage from './views/newsPage/News'
+import userChild from "./views/profilePage/components/userChild"
+import shippingChild from "./views/profilePage/components/shippingChild"
+import ordersChild from "./views/profilePage/components/ordersChild"
+import passwordChild from "@/views/profilePage/components/passwordChild"
+import portraitDescriptionChild from "@/views/profilePage/components/portraitDescriptionChild"
 
 
 Vue.use(Router);
@@ -35,6 +40,32 @@ const router = new Router({
         {
             path: '/profile',
             component: profilePage,
+            children:[
+                {
+                    path: "user",
+                    component: userChild,
+                },
+                {
+                    path: "shipping",
+                    component: shippingChild,
+                },
+                {
+                    path: "orders",
+                    component: ordersChild,
+                },
+                {
+                    path: "password",
+                    component: passwordChild,
+                },
+                {
+                    path: "editPD",
+                    component: portraitDescriptionChild,
+                },
+                {
+                    path: "",
+                    redirect:'/profile/user',
+                },
+            ],
         },
         {
             path: '/register',

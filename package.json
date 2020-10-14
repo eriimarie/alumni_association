@@ -17,7 +17,9 @@
     "express": "^4.17.1",
     "mongoose": "^5.10.8",
     "vue": "^2.6.12",
+    "vue-avatar-cropper": "^1.0.9",
     "vue-axios": "^3.0.1",
+    "vue-cookies": "^1.7.4",
     "vue-router": "^3.4.4"
   },
   "devDependencies": {

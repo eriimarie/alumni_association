@@ -1,10 +1,20 @@
 <template>
-  <div>Log in page</div>
+  <div>
+    <topImg></topImg>
+    <userInfo></userInfo>
+  </div>
 </template>
 
+
+
 <script>
+import userInfo from "@/views/loginPage/components/Loginpage";
+import topImg from "@/views/loginPage/components/topImg"
 export default {
-  name: "Login"
+  components:{
+    userInfo:userInfo,
+    topImg:topImg,
+  }
 }
 </script>
 

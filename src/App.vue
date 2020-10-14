@@ -22,6 +22,6 @@ export default {
 
 <style>
 *{
-  text-align: center;
+
 }
 </style>

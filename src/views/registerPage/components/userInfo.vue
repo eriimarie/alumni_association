@@ -1,6 +1,6 @@
 <template>
   <div id="box">
-    <b-form @submit="register">
+    <b-form @submit="onSubmit">
       <h3>Register</h3>
       <hr>
 
@@ -17,7 +17,7 @@
         </b-form-group>
 
         <b-form-group label-cols="4" label-cols-lg="2" label="University Id (*):">
-          <b-form-input id="universityId" v-model="form.universityID" type="number" placeholder="Enter university Id"
+          <b-form-input id="universityId" v-model="form.universityId" type="number" placeholder="Enter university Id"
                         description="Please only enter numbers" required></b-form-input>
         </b-form-group>
       </div>
@@ -74,7 +74,7 @@
         </b-form-group>
 
         <b-form-group label-cols="4" label-cols-lg="2" label="State (*):">
-          <b-form-select id="state" v-model="form.State" type="text" :options="USAState"
+          <b-form-select id="state" v-model="form.state" type="text" :options="USAState"
                          required></b-form-select>
         </b-form-group>
 
@@ -102,8 +102,6 @@
                         required></b-form-input>
         </b-form-group>
       </div>
-
-
       <b-button type="submit">Submit</b-button>
     </b-form>
 
@@ -124,7 +122,7 @@ export default {
       form: {
         firstName: '',
         lastName: '',
-        universityID: '',
+        universityId: '',
         email: '',
         password: '',
         password2: '',
@@ -132,12 +130,13 @@ export default {
         streetAddress: '',
         streetAddress2: '',
         city: '',
-        State: '',
+        state: '',
         zipCode: '',
         question1: '',
         answer1: '',
         question2: '',
-        answer2: ''
+        answer2: '',
+        aboutMe: '',
       },
 
       USAState: ['AL', 'AK', 'AS', 'AZ', 'AR', 'CA', 'CO', 'CT', 'DE', 'DC', 'FL', 'GA', 'GU', 'HI', 'ID', 'IL', 'IN', 'IA', 'KS',
@@ -155,6 +154,15 @@ export default {
   },
 
   methods: {
+    onSubmit() {
+      this.$axios.post('/register', this.form).then(res=>{
+        alert(res.data)
+        this.$router.push('/index')
+      }).catch(function (err){
+        alert(err)
+      })
+    },
+
     checkPassword: function () {
       if (!(/\d/.test(this.form.password) && /[a-z]/.test(this.form.password) && /[A-Z]/.test(this.form.password) &&
           /[!@#$%^&*)(+=._-]/.test(this.form.password) && this.form.password.length >= 8)) {
@@ -180,13 +188,6 @@ export default {
         this.isShow = false;
       }
     },
-
-    register() {
-      this.$axios.post('/register', this.form).then(res=>{
-        console.log(res.data)
-        this.$router.push('/login')
-      })
-    }
   }
 }
 </script>

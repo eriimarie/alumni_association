@@ -40,7 +40,7 @@ export default {
     margin: 0 auto;
   }
   #title{
-    color: #6cf;
+    color: #453EAE;
   }
   #context{
     color: black;
