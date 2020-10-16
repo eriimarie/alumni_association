@@ -46,8 +46,11 @@ export default {
     onSubmit(){
       this.$axios.post('/login',this.form).then(res=>{
         alert(res.data)
-        this.$cookies.set('email', this.form.email)
-        this.$cookies.set('password', this.form.password)
+        if (res.data === "valid password, login successfully"){
+          this.$cookies.set('email', this.form.email)
+          this.$cookies.set('password', this.form.password)
+          this.$router.go(-1)
+        }
       }).catch(function (err){
         alert(err)})
     }

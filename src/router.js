@@ -1,20 +1,27 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import donatePage from './views/donatePage/Donate'
-import eventsPage from './views/eventsPage/Events'
+import resourcesPage from './views/resourcesPage/Resources'
+import careerChild from "./views/resourcesPage/components/careerChild"
+import eventsChild from "./views/resourcesPage/components/eventsChild"
 import loginPage from './views/loginPage/Login'
 import profilePage from './views/profilePage/Profile'
 import registerPage from './views/registerPage/Register'
 import shoppingCartPage from './views/shoppingCartPage/ShoppingCart'
 import shoppingPage from './views/shoppingPage/Shopping'
 import mainPage from './views/mainPage/Main'
-import newsPage from './views/newsPage/News'
+import volunteerPage from './views/volunteerPage/Volunteer'
+import leadershipChild from "./views/volunteerPage/components/leadershipChild"
+import charityChild from "./views/volunteerPage/components/charityChild"
+import healthcareChild from "./views/volunteerPage/components/healthcareChild"
+import educationChild from "./views/volunteerPage/components/educationChild"
 import userChild from "./views/profilePage/components/userChild"
 import shippingChild from "./views/profilePage/components/shippingChild"
 import ordersChild from "./views/profilePage/components/ordersChild"
-import passwordChild from "@/views/profilePage/components/passwordChild"
-import portraitDescriptionChild from "@/views/profilePage/components/portraitDescriptionChild"
-
+import passwordChild from "./views/profilePage/components/passwordChild"
+import portraitDescriptionChild from "./views/profilePage/components/portraitDescriptionChild"
+import detailEvents from "./views/resourcesPage/components/detailEvents"
+import adminPage from "./views/adminPage/Admin"
 
 Vue.use(Router);
 
@@ -23,12 +30,34 @@ const router = new Router({
     base: process.env.BASE_URL,
     routes: [
         {
+            path: '/admin',
+            component: adminPage,
+        },
+        {
             path: '/donate',
             component: donatePage,
         },
         {
-            path: '/events',
-            component: eventsPage,
+            path: '/resources',
+            component: resourcesPage,
+            children: [
+                {
+                    path: "career",
+                    component: careerChild,
+                },
+                {
+                    path: "events",
+                    component: eventsChild,
+                },
+                {
+                    path: "",
+                    redirect: '/resources/career',
+                }
+            ],
+        },
+        {
+            path: '/resources/events/:id',
+            component: detailEvents
         },
         {
             path:'/user',
@@ -80,8 +109,30 @@ const router = new Router({
             component: shoppingPage,
         },
         {
-            path: '/news',
-            component: newsPage,
+            path: '/volunteer',
+            component: volunteerPage,
+            children: [
+                {
+                    path: "leadership",
+                    component: leadershipChild,
+                },
+                {
+                    path: "charity",
+                    component: charityChild,
+                },
+                {
+                    path: "educational",
+                    component: educationChild,
+                },
+                {
+                    path: "healthcare",
+                    component: healthcareChild,
+                },
+                {
+                    path: "",
+                    redirect:'/volunteer/leadership',
+                },
+            ]
         },
         {
             path: '/index',
@@ -93,4 +144,20 @@ const router = new Router({
         },
     ]
 })
+
+router.beforeEach((to, from, next) => {
+    console.log(to)
+    console.log(to.path === '/volunteer')
+    console.log(window.$cookies.get('email'))
+    if (to.path === '/volunteer'){
+        if (window.$cookies.get('email') != null) {
+            next()
+        } else {
+            window.alert('Please login to continue')
+            next('/login')
+        }
+    }
+    next()
+})
+
 export default router;
