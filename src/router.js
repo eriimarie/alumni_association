@@ -22,6 +22,13 @@ import passwordChild from "./views/profilePage/components/passwordChild"
 import portraitDescriptionChild from "./views/profilePage/components/portraitDescriptionChild"
 import detailEvents from "./views/resourcesPage/components/detailEvents"
 import adminPage from "./views/adminPage/Admin"
+import handleCareer from "./views/adminPage/components/handleCareer"
+import handleEvents from "./views/adminPage/components/handleEvents"
+import handleOrder from "./views/adminPage/components/handleOrder"
+import handleShopping from "./views/adminPage/components/handleShopping"
+import handleUser from "./views/adminPage/components/handleUser"
+import handleVolunteer from "./views/adminPage/components/handleVolunteer"
+
 
 Vue.use(Router);
 
@@ -32,6 +39,36 @@ const router = new Router({
         {
             path: '/admin',
             component: adminPage,
+            children: [
+                {
+                    path: "handleCareer",
+                    component: handleCareer,
+                },
+                {
+                    path: "handleEvent",
+                    component: handleEvents,
+                },
+                {
+                    path: "handleShopping",
+                    component: handleShopping,
+                },
+                {
+                    path: "handleUser",
+                    component: handleUser,
+                },
+                {
+                    path: "handleVolunteer",
+                    component: handleVolunteer,
+                },
+                {
+                    path: "handleOrder",
+                    component: handleOrder,
+                },
+                {
+                    path: "",
+                    component: '/admin/handleCareer'
+                },
+            ]
         },
         {
             path: '/donate',
