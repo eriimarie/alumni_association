@@ -66,7 +66,7 @@ const router = new Router({
                 },
                 {
                     path: "",
-                    component: '/admin/handleCareer'
+                    redirect: '/admin/handleCareer'
                 },
             ]
         },

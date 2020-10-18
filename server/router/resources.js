@@ -33,15 +33,4 @@ router.get('/events/detail', async (req, res)=>{
     const event = await events.findOne({sortDate: req.query.id})
     return res.send(event)
 })
-
-router.post('/addCareer', async (req, res)=>{
-    await new career(req.body).save()
-    return res.send("success")
-})
-
-router.post('/addEvents', async (req, res)=>{
-    await new events(req.body).save()
-    return res.send("success")
-})
-
 module.exports = router

@@ -1,7 +1,9 @@
 const express = require('express')
+const multer = require('multer')
 const user = require('../model/register')
 const orders = require('../model/orders')
 const router = express.Router()
+const upload = multer({dest: 'upload/'})
 
 
 router.post('/user', async (req, res)=>{
@@ -41,6 +43,11 @@ router.post('/changeDescription', async (req, res)=>{
     const newValues = {$set: {description: req.body.description}}
     await user.updateOne(myQuery, newValues)
     return res.send('success')
+})
+
+router.post('/changePhoto', upload.single('profile_photo'), async (req, res)=>{
+    console.log(req.file)
+    return res.send("success")
 })
 
 module.exports = router

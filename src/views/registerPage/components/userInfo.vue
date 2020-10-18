@@ -25,8 +25,9 @@
 
       <div id="accountInfo">
         <b>Account information</b>
-        <b-form-group label-cols="4" label-cols-lg="2" label="Email (*):">
-          <b-form-input id="email" v-model="form.email" type="email" placeholder="Enter email" required></b-form-input>
+        <b-form-group :class="{'emailError':emailError}" label-cols="4" label-cols-lg="2" label="Email (*):">
+          <b-form-input id="email" v-model="form.email" type="email" v-on:blur="checkEmail" placeholder="Enter email" required></b-form-input>
+          <span v-show="emailError">email already exist</span>
         </b-form-group>
 
         <b-form-group label-cols="4" label-cols-lg="2" :class="{'passwordError':isPassword1}" label="Password (*):">
@@ -118,6 +119,7 @@ export default {
       isPassword2: false,
       isChangeBorder: false,
       isShow: false,
+      emailError: false,
 
       form: {
         firstName: '',
@@ -160,6 +162,17 @@ export default {
         this.$router.push('/index')
       }).catch(function (err){
         alert(err)
+      })
+    },
+
+    async checkEmail() {
+      await this.$axios.get(`/register/check?email=${this.form.email}`).then(res=>{
+        if (res.data === 'user exist'){
+          this.form.email = ''
+          this.emailError = true
+        } else {
+          this.emailError = false
+        }
       })
     },
 
@@ -208,6 +221,10 @@ export default {
   margin-top: 5px;
   border-radius: 20px;
   color: gray;
+}
+
+.emailError{
+  color: red
 }
 
 #passwordNotMatch {
