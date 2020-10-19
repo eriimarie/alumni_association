@@ -8,7 +8,7 @@
             <b-icon class="icon primary white--text" @click="$refs.FileInput.click()"><b>+</b></b-icon>
             <input ref="FileInput" type="file" style="display: none;" @change="onFileSelect" />
           </div>
-          <b-dialog v-model="dialog" width="500">
+          <b-container v-model="dialog" width="500">
             <b-card>
               <b-card-text>
                 <VueCropper v-show="selectedFile" ref="cropper" :src="selectedFile" alt="Source Image"></VueCropper>
@@ -17,7 +17,7 @@
                 <b-btn class="primary" @click="saveImage() (dialog = false)">Crop</b-btn>
               </b-card>
             </b-card>
-          </b-dialog>
+          </b-container>
         </b-col>
 
         <b-col sm="6">

@@ -6,6 +6,16 @@ const products = require('../model/products')
 const volunteer = require('../model/volunteer')
 const users = require('../model/register')
 const router = express.Router()
+const multer = require('multer')
+const fs = require('fs')
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, './upload')
+    },
+    filename: function (req, file, cb) {
+        cb(null, `product_${Date.now()}.jpg`)
+    }
+})
 
 router.post('/addCareer', async (req, res)=>{
     await new career(req.body).save()
@@ -133,6 +143,10 @@ router.post('/updateUser', async (req, res)=>{
         answer2: req.body.answer2, isAdmin: req.body.isAdmin, })
     console.log(result)
     return res.send(result)
+})
+
+router.post('/addProduct', async (req, res)=>{
+    console.log(req.body)
 })
 
 
