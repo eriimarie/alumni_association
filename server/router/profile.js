@@ -1,9 +1,17 @@
 const express = require('express')
-const multer = require('multer')
 const user = require('../model/register')
 const orders = require('../model/orders')
 const router = express.Router()
-const upload = multer({dest: 'upload/'})
+const multer = require('multer')
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, './upload')
+    },
+    filename: function (req, file, cb) {
+        cb(null, `user_profile_${Date.now()}.jpg`)
+    }
+})
+const upload = multer({storage: storage})
 
 
 router.post('/user', async (req, res)=>{
@@ -46,7 +54,14 @@ router.post('/changeDescription', async (req, res)=>{
 })
 
 router.post('/changePhoto', upload.single('profile_photo'), async (req, res)=>{
-    console.log(req.file)
+    console.log('req.file', req.file)
+    /**
+     * router accept one more param in body - user_id/email
+     * query user row with user_id
+     * save this path to user schema
+     * path is in req.file.path
+     * seudo code: User.where(email: email).update(avatar: req.file.path)
+     */
     return res.send("success")
 })
 

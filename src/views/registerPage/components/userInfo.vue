@@ -110,7 +110,10 @@
 </template>
 
 <script>
-
+/**
+ *     if cookie.email => index
+ * @returns {string}
+ */
 export default {
   data() {
     return {
@@ -187,6 +190,8 @@ export default {
         this.isChangeBorder = false;
       }
     },
+
+
 
     comparePassword: function () {
       console.log(this.form.password);

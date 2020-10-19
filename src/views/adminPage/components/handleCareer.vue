@@ -19,7 +19,7 @@
         <h4>Find career</h4>
         <hr>
         <b-form-group label-cols="4" label-cols-lg="2" label="title:">
-          <b-form-input v-model="findTitle" type="text" required placeholder="Enter title"></b-form-input>
+          <b-form-input id="title" v-model="findTitle" type="text" required placeholder="Enter title"></b-form-input>
         </b-form-group>
         <b-button @click.prevent="submitFind(findTitle)">Find title</b-button>
       </b-form>
@@ -44,7 +44,7 @@
     <div>
       <h4>Career list</h4>
       <hr>
-      <li v-for="(career, index) in careerData" v-bind:key="career">
+      <li v-for="(career, index) in careerData" :key="index">
         {{career.title}}
         <br>
         {{career.content}}

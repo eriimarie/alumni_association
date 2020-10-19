@@ -7,6 +7,7 @@
             <div class="addBorder">
 
               <!--          show img-->
+              <b-img src="http://localhost:3000/upload/user_profile1603076355165.jpg"></b-img>
 
               <h4>My Profile</h4>
               <hr>
@@ -88,6 +89,7 @@ export default {
         lastName: '',
         universityId: '',
         email: '',
+        avatarPath: '',
         cellphone: '',
         streetAddress: '',
         streetAddress2: '',

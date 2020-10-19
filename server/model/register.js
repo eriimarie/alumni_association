@@ -20,6 +20,8 @@ const userSchema = new Schema({
     photo:{type:String, default: 'default.jpg'},
     description:{type:String, default: 'none'},
     isAdmin:{type:String, default:'0'},
+    avatarPath:{type: String}
+
 })
 
 const registerInfo = model('user', userSchema)
