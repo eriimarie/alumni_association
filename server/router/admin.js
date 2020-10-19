@@ -2,6 +2,7 @@ const express = require('express')
 const career = require('../model/career')
 const events = require('../model/events')
 const orders = require('../model/orders')
+const products = require('../model/products')
 const volunteer = require('../model/volunteer')
 const users = require('../model/register')
 const router = express.Router()
@@ -133,5 +134,7 @@ router.post('/updateUser', async (req, res)=>{
     console.log(result)
     return res.send(result)
 })
+
+
 
 module.exports = router

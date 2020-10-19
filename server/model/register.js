@@ -17,11 +17,9 @@ const userSchema = new Schema({
     answer1:{type:String, require:true},
     question2:{type:String, require:true},
     answer2:{type:String, require:true},
-    photo:{type:String, default: 'default.jpg'},
     description:{type:String, default: 'none'},
     isAdmin:{type:String, default:'0'},
-    avatarPath:{type: String}
-
+    avatarPath:{type: String, default: 'upload\\\\default.jpg'}
 })
 
 const registerInfo = model('user', userSchema)

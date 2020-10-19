@@ -51,7 +51,7 @@
     <div>
       <h4>Career list</h4>
       <hr>
-      <li v-for="(events, index) in eventsData" v-bind:key="events">
+      <li v-for="(events, index) in eventsData" v-bind:key="index">
         {{events.title}}
         <p style="white-space: pre-line">{{events.content}}</p>
         <br>

@@ -7,7 +7,10 @@
             <div class="addBorder">
 
               <!--          show img-->
-              <b-img src="http://localhost:3000/upload/user_profile1603076355165.jpg"></b-img>
+              <div size="120" class="user" style="margin: 0 auto">
+                <b-img :src="this.userData.path" class="profile-img"></b-img>
+              </div>
+
 
               <h4>My Profile</h4>
               <hr>
@@ -85,6 +88,7 @@ export default {
       isShow: false,
 
       userData: {
+        path: '',
         firstName: '',
         lastName: '',
         universityId: '',
@@ -108,6 +112,7 @@ export default {
       await this.$axios.post('/profile/user', {email:this.$cookies.get('email')}).then(res=>{
         const data = res.data
         console.log(data)
+        this.userData.path = "http://localhost:3000/" + data.avatarPath
         this.userData.email = data.email
         this.userData.firstName = data.firstName
         this.userData.lastName = data.lastName
@@ -127,6 +132,18 @@ export default {
 </script>
 
 <style scoped>
+.user {
+  width: 140px;
+  height: 140px;
+  border-radius: 100%;
+  border: 3px solid #2e7d32;
+  position: relative;
+}
+.profile-img {
+  height: 100%;
+  width: 100%;
+  border-radius: 50%;
+}
   .addBorder{
     padding: 20px;
     border: 1px solid #ccc;

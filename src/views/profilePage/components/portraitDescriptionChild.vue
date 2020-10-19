@@ -1,21 +1,36 @@
 <template>
   <div>
-    <div size="120" class="user">
-      <b-img :src="image_name" class="profile-img"></b-img>
-      <b-icon class="icon primary white--text" @click="$refs.FileInput.click()">mdi-upload</b-icon>
-      <input ref="FileInput" type="file" style="display: none;" @change="onFileSelect" />
-    </div>
-    <b-dialog v-model="dialog" width="500">
-      <b-card>
-        <b-card-text>
-          <VueCropper v-show="selectedFile" ref="cropper" :src="selectedFile" alt="Source Image"></VueCropper>
-        </b-card-text>
-        <b-card-actions>
-          <b-btn class="primary" @click="saveImage(), (dialog = false)">Crop</b-btn>
-          <b-btn color="primary" text @click="dialog = false">Cancel</b-btn>
-        </b-card-actions>
-      </b-card>
-    </b-dialog>
+    <b-container>
+      <b-row>
+        <b-col sm="6">
+          <div size="120" class="user" style="margin: 0 auto">
+            <b-img :src="this.userPhoto.path" class="profile-img"></b-img>
+            <b-icon class="icon primary white--text" @click="$refs.FileInput.click()"><b>+</b></b-icon>
+            <input ref="FileInput" type="file" style="display: none;" @change="onFileSelect" />
+          </div>
+          <b-dialog v-model="dialog" width="500">
+            <b-card>
+              <b-card-text>
+                <VueCropper v-show="selectedFile" ref="cropper" :src="selectedFile" alt="Source Image"></VueCropper>
+              </b-card-text>
+              <b-card>
+                <b-btn class="primary" @click="saveImage() (dialog = false)">Crop</b-btn>
+              </b-card>
+            </b-card>
+          </b-dialog>
+        </b-col>
+
+        <b-col sm="6">
+          <b-form @submit.prevent="changeDescription">
+            <h4>Change my description</h4>
+            <hr>
+            <b-form-textarea v-model="userDescription.description" rows="5"></b-form-textarea>
+            <b-button type="submit">Change description</b-button>
+          </b-form>
+        </b-col>
+      </b-row>
+    </b-container>
+
   </div>
 </template>
 
@@ -36,7 +51,21 @@ export default {
       image: '',
       dialog: false,
       files: '',
+
+      userDescription: {
+        email: '',
+        description: ''
+      },
+
+      userPhoto: {
+        email: '',
+        path: '',
+      },
+
     }
+  },
+  mounted() {
+    this.getData()
   },
   methods: {
     saveImage() {
@@ -44,12 +73,13 @@ export default {
       this.$refs.cropper.getCroppedCanvas().toBlob((blob) => {
         const formData = new FormData()
         formData.append('profile_photo', blob, 'name.jpeg')
+        formData.append('email', this.userPhoto.email)
         this.$axios.post('profile/changePhoto', formData, {
           headers: {
             'Content-Type': 'multipart/form-data'
           }
         }).then(res=>{
-          alert(res.data)
+          this.userPhoto.path = "http://localhost:3000/" + res.data
         })
       }, this.mime_type)
     },
@@ -68,6 +98,20 @@ export default {
       } else {
         alert('Sorry, FileReader API not supported')
       }
+    },
+    async getData(){
+      await this.$axios.post('/profile/user', {email:this.$cookies.get('email')}).then(res=>{
+        const data = res.data
+        this.userPhoto.email = data.email
+        this.userPhoto.path = "http://localhost:3000/" + data.avatarPath
+        this.userDescription.email = data.email
+        this.userDescription.description = data.description
+      })
+    },
+    async changeDescription() {
+      await this.$axios.post('/profile/changeDescription', this.userDescription).then(res=>{
+        alert(res.data)
+      })
     },
   },
 }
@@ -101,128 +145,3 @@ export default {
   cursor: pointer;
 }
 </style>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<!--<template>-->
-<!--  <div id="box">-->
-<!--    <b-container>-->
-<!--      <b-row>-->
-<!--        <b-col sm="6">-->
-<!--          <b-form @submit="changePhoto">-->
-<!--            <b-img :src="require(`@/assets/userPhotos/${userPhoto.photo}`)" height="100" width="100"></b-img>-->
-<!--            <button id="pick-avatar">Select an image</button>-->
-<!--            <avatar-cropper-->
-<!--                @uploaded="changePhoto"-->
-<!--                trigger="#set-avatar"-->
-<!--                upload-url="src/assets/userPhotos"-->
-<!--            />-->
-<!--            {{userPhoto}}-->
-<!--          </b-form>-->
-<!--        </b-col>-->
-<!--        <b-col sm="6">-->
-<!--          <b-form @submit.prevent="changeDescription">-->
-<!--            <h4>Change my description</h4>-->
-<!--            <hr>-->
-<!--            <b-form-textarea v-model="userDescription.description" rows="5"></b-form-textarea>-->
-<!--            <b-button type="submit">Change description</b-button>-->
-<!--          </b-form>-->
-<!--        </b-col>-->
-<!--      </b-row>-->
-<!--    </b-container>-->
-
-<!--  </div>-->
-<!--</template>-->
-
-<!--<script>-->
-<!--import AvatarCropper from 'vue-avatar-cropper'-->
-
-<!--export default {-->
-<!--  components: { AvatarCropper },-->
-<!--  data() {-->
-<!--    return{-->
-<!--      userPhoto: {-->
-<!--        email: '',-->
-<!--        photo: '',-->
-<!--      },-->
-<!--      userDescription: {-->
-<!--        email: '',-->
-<!--        description: ''-->
-<!--      }-->
-<!--    }-->
-<!--  },-->
-<!--  mounted() {-->
-<!--  this.getData()-->
-<!--  },-->
-<!--  methods:{-->
-<!--    async getData(){-->
-<!--      await this.$axios.post('/profile/user', {email:this.$cookies.get('email')}).then(res=>{-->
-<!--        const data = res.data-->
-<!--        this.userPhoto.email = data.email-->
-<!--        this.userDescription.email = data.email-->
-<!--        this.userPhoto.photo = data.photo-->
-<!--        this.userDescription.description = data.description-->
-<!--      })-->
-<!--    },-->
-<!--    async changeDescription() {-->
-<!--      await this.$axios.post('/profile/changeDescription', this.userDescription).then(res=>{-->
-<!--        alert(res.data)-->
-<!--      })-->
-<!--    },-->
-<!--    changePhoto() {-->
-<!--      alert(this.userPhoto.photo)-->
-<!--    }-->
-<!--  }-->
-<!--}-->
-<!--</script>-->
-
-<!--<style scoped>-->
-
-<!--</style>-->

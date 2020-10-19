@@ -46,7 +46,7 @@
           <b-form-input v-model="changeForm.streetAddress" type="text" required></b-form-input>
         </b-form-group>
         <b-form-group label-cols="4" label-cols-lg="2" label="streetAddress2:">
-          <b-form-input v-model="changeForm.streetAddress2" type="text" required></b-form-input>
+          <b-form-input v-model="changeForm.streetAddress2" type="text"></b-form-input>
         </b-form-group>
         <b-form-group label-cols="4" label-cols-lg="2" label="city:">
           <b-form-input v-model="changeForm.city" type="text" required></b-form-input>
@@ -70,7 +70,7 @@
           <b-form-input v-model="changeForm.answer2" type="text" required></b-form-input>
         </b-form-group>
         <b-form-group label-cols="4" label-cols-lg="2" label="isAdmin:">
-          <b-form-input v-model="changeForm.isAdmin" type="text" required></b-form-input>
+          <b-form-select v-model="changeForm.isAdmin" :options="admin" type="text" required></b-form-select>
         </b-form-group>
         <b-button type="submit" >Submit change</b-button>
       </b-form>
@@ -88,7 +88,6 @@ export default {
       isShow: false,
       showFindChange: false,
       findUser: '',
-
 
       changeForm: {
         firstName: '',
@@ -108,6 +107,8 @@ export default {
         answer2: '',
         isAdmin: '',
       },
+
+      admin: ['0', '1']
     }
   },
 

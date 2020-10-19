@@ -186,7 +186,7 @@ router.beforeEach((to, from, next) => {
     console.log(to)
     console.log(to.path === '/volunteer')
     console.log(window.$cookies.get('email'))
-    if (to.path === '/volunteer'){
+    if (to.path.includes('volunteer') || to.path.includes('profile')){
         if (window.$cookies.get('email') != null) {
             next()
         } else {
