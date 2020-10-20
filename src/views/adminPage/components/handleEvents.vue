@@ -188,7 +188,7 @@ export default {
     },
 
     async deleteEvent(sortDate) {
-      let answer = window.confirm("You you sure?")
+      let answer = window.confirm("Are you sure?")
       if (answer){
         await this.$axios.post('/admin/deleteEvent', {sortDate: sortDate}).then(res=>{
           console.log(res.data)

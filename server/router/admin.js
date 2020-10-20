@@ -16,6 +16,7 @@ const storage = multer.diskStorage({
         cb(null, `product_${Date.now()}.jpg`)
     }
 })
+const uploadPhoto = multer({storage: storage})
 
 router.post('/addCareer', async (req, res)=>{
     await new career(req.body).save()
@@ -147,7 +148,67 @@ router.post('/updateUser', async (req, res)=>{
 
 router.post('/addProduct', async (req, res)=>{
     console.log(req.body)
+    await new products(req.body).save()
+    return res.send('success')
 })
+
+router.get('/findProduct', async (req, res)=>{
+    console.log(req.query)
+    const foundProduct = await products.findOne({name: req.query.name})
+    console.log(foundProduct)
+    if (foundProduct === null) {
+        return res.send('not found')
+    } else {
+        return res.send(foundProduct)
+    }
+})
+
+router.post('/addPhoto', uploadPhoto.single('product_photo'), async (req, res)=>{
+    console.log('req.file', req.file)
+    console.log('name', req.body.name)
+    const productPath = await products.findOne({name: req.body.name})
+    console.log(productPath)
+    const myQuery = {name: req.body.name}
+    const newValues = {$set: {path: req.file.path}}
+    await products.updateOne(myQuery, newValues)
+    console.log(productPath.path)
+    fs.unlink(productPath.path, (err)=>{
+        if (err){
+            console.log(err)
+        }
+    })
+    return res.send(req.file.path)
+})
+
+router.get('/findProduct', async (req, res)=>{
+    console.log(req.query.title)
+    const foundProduct = await products.findOne({name: req.query.name})
+    if (foundProduct === null){
+        return  res.send('not found')
+    } else{
+        return res.send(foundProduct)
+    }
+})
+
+router.post('/deleteProduct', async (req, res)=>{
+
+    const result = await products.deleteOne({name: req.body.name})
+    return res.send(result)
+})
+
+router.get('/products', async (req, res)=>{
+    const list = await users.find().sort({path: -1})
+    return res.send(list)
+})
+
+router.post('/changeProduct', async (req, res)=>{
+    console.log(req.body)
+    const result = await products.updateOne({name: req.body.name}, {price: req.body.price, amount: req.body.amount,
+        size: req.body.size, description: req.body.description})
+    console.log(result)
+    return res.send(result)
+})
+
 
 
 
