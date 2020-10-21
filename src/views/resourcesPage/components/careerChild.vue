@@ -5,12 +5,6 @@
       <br>
       {{career.content}}
     </li>
-<!--    <b-table-->
-<!--        :items="careerData"-->
-<!--        :per-page="10"-->
-<!--        :current-page="currentPage"-->
-<!--        small-->
-<!--    ></b-table>-->
     <b-pagination
         v-model="currentPage"
         :total-rows="rows"

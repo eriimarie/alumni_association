@@ -49,7 +49,7 @@
     </div>
 
     <div>
-      <h4>Career list</h4>
+      <h4>Events list</h4>
       <hr>
       <li v-for="(events, index) in eventsData" v-bind:key="index">
         {{events.title}}

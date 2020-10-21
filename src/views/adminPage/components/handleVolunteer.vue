@@ -56,7 +56,7 @@
     </div>
 
     <div>
-      <h4>Career list</h4>
+      <h4>Volunteer list</h4>
       <hr>
       <li v-for="(volunteer, index) in volunteerData" v-bind:key="index">
         {{volunteer.title}}

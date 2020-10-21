@@ -156,23 +156,23 @@ router.get('/findProduct', async (req, res)=>{
     console.log(req.query)
     const foundProduct = await products.findOne({name: req.query.name})
     console.log(foundProduct)
-    if (foundProduct === null) {
-        return res.send('not found')
+    if (foundProduct === null){
+        return res.send('not exist')
     } else {
         return res.send(foundProduct)
     }
 })
 
+
 router.post('/addPhoto', uploadPhoto.single('product_photo'), async (req, res)=>{
-    console.log('req.file', req.file)
+    console.log('req.file', req.file.path)
     console.log('name', req.body.name)
-    const productPath = await products.findOne({name: req.body.name})
-    console.log(productPath)
+    const photo = await products.findOne({name: req.body.name})
+    console.log(photo)
     const myQuery = {name: req.body.name}
     const newValues = {$set: {path: req.file.path}}
     await products.updateOne(myQuery, newValues)
-    console.log(productPath.path)
-    fs.unlink(productPath.path, (err)=>{
+    fs.unlink(photo.path, (err)=>{
         if (err){
             console.log(err)
         }
@@ -180,15 +180,7 @@ router.post('/addPhoto', uploadPhoto.single('product_photo'), async (req, res)=>
     return res.send(req.file.path)
 })
 
-router.get('/findProduct', async (req, res)=>{
-    console.log(req.query.title)
-    const foundProduct = await products.findOne({name: req.query.name})
-    if (foundProduct === null){
-        return  res.send('not found')
-    } else{
-        return res.send(foundProduct)
-    }
-})
+
 
 router.post('/deleteProduct', async (req, res)=>{
 
@@ -197,17 +189,86 @@ router.post('/deleteProduct', async (req, res)=>{
 })
 
 router.get('/products', async (req, res)=>{
-    const list = await users.find().sort({path: -1})
+    const list = await products.find().sort({path: -1})
     return res.send(list)
 })
 
 router.post('/changeProduct', async (req, res)=>{
     console.log(req.body)
-    const result = await products.updateOne({name: req.body.name}, {price: req.body.price, amount: req.body.amount,
-        size: req.body.size, description: req.body.description})
+    const result = await products.updateOne({path: req.body.path}, {name: req.body.name, price: req.body.price, amount: req.body.amount,
+        size: req.body.size, description: req.body.description, category: req.body.category})
     console.log(result)
     return res.send(result)
 })
+
+router.post('/addTracking', async (req, res)=>{
+    console.log(req.body)
+    const result = await orders.updateOne({orderNumber: req.body.orderNumber}, {$set: {track: req.body.tracking, status: "shipped"}})
+    console.log(result)
+    return res.send(result)
+})
+
+router.post('/deleteOrder', async (req, res)=>{
+    const result = await orders.deleteOne({orderNumber: req.body.orderNumber})
+    return res.send(result)
+})
+
+router.post('/delivered', async (req, res)=>{
+    console.log(req.body)
+    const result = await orders.updateOne({orderNumber: req.body.orderNumber}, {$set: {status: "delivered"}})
+    return res.send(result)
+})
+
+router.get('/findOrder', async (req, res)=>{
+    console.log(req.query)
+    const foundOrder = await orders.find({email: req.query.email})
+    console.log(foundOrder)
+    if (foundOrder === null){
+        return res.send('not exist')
+    } else {
+        return res.send(foundOrder)
+    }
+})
+
+router.get('/findPending', async (req, res)=>{
+    return res.send(await orders.find({status: "pending"}).sort({orderNumber: -1}))
+})
+
+router.get('/findShipping', async (req, res)=>{
+    return res.send(await orders.find({status: "shipped"}).sort({orderNumber: -1}))
+})
+
+router.get('/findDelivered', async (req, res)=>{
+    return res.send(await orders.find({status: "delivered"}).sort({orderNumber: -1}))
+})
+
+router.get('/changePage', async (req, res)=>{
+    const urlObj = req.query
+    console.log(req.query)
+    console.log(10*(urlObj.page))
+    console.log(urlObj.status)
+    const list = await orders.find({status: urlObj.status}).sort({orderNumber: -1}).skip(10*(urlObj.page-1)).limit(10)
+    console.log(list)
+    return res.send(list)
+})
+
+router.get('/changeFindPage', async (req, res)=>{
+    const urlObj = req.query
+    console.log(10*(urlObj.page-1))
+    console.log(10*(urlObj.email))
+    const list = await orders.find({email: urlObj.email}).sort({orderNumber: -1}).skip(10*(urlObj.page-1)).limit(10)
+    console.log(list)
+    return res.send(list)
+})
+
+router.post('/addOrder', async (req, res)=>{
+    console.log(req.body)
+    await new orders(req.body).save()
+    return res.send('success')
+})
+
+
+
 
 
 

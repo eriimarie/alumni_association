@@ -1,8 +1,6 @@
 import Vue from 'vue'
 import App from './App.vue'
 import Router from './router'
-import ElementUI from 'element-ui'
-import 'element-ui/lib/theme-chalk/index.css'
 import BootstrapVue from "bootstrap-vue"
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
@@ -13,7 +11,6 @@ import VueCropper from 'vue-cropperjs'
 
 Vue.prototype.$axios = axios
 Vue.use(VueCookies)
-Vue.use(ElementUI)
 Vue.use(BootstrapVue)
 Vue.use(VueCropper)
 Vue.config.productionTip = false

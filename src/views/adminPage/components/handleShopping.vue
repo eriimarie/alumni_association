@@ -1,6 +1,5 @@
 <template>
   <div id="box">
-    {{addProduct}}
     <div>
       <b-form @submit.prevent="addProductFunction">
         <h4>Add product</h4>
@@ -8,7 +7,7 @@
         <hr>
         <div v-show="isShowAdd">
           <b-form-group label-cols="4" label-cols-lg="2" label="Product name:">
-            <b-form-input v-model="addProduct.name" type="text" required placeholder="Enter product name"></b-form-input>
+            <b-form-input v-model="addProduct.name" type="text" v-on:blur="checkName" required placeholder="Enter product name"></b-form-input>
           </b-form-group>
           <b-form-group label-cols="4" label-cols-lg="2" label="Product price:">
             <b-form-input v-model="addProduct.price" type="number" required placeholder="Enter product price"></b-form-input>
@@ -32,7 +31,7 @@
 
     <div v-show="isShowCrop">
       <div size="120" class="user" style="margin: 0 auto">
-        <b-button @click="$refs.FileInput.click()">add picture</b-button>
+        <b-icon class="icon primary white--text" @click="$refs.FileInput.click()">add picutre</b-icon>
         <input ref="FileInput" type="file" style="display: none;" @change="onFileSelect" />
       </div>
       <b-container v-model="dialog" width="500">
@@ -41,7 +40,7 @@
             <VueCropper v-show="selectedFile" ref="cropper" :src="selectedFile" alt="Source Image"></VueCropper>
           </b-card-text>
           <b-card>
-            <b-btn class="primary" @click="saveImage() (dialog = false)">Crop</b-btn>
+            <b-btn class="primary" @click="savePhoto() (dialog = false)">Crop</b-btn>
           </b-card>
         </b-card>
       </b-container>
@@ -52,43 +51,43 @@
       <hr>
       <b-form @submit.prevent="findProductFunction">
         <b-form-group label-cols="4" label-cols-lg="2" label="Product name:">
-          <b-form-input v-model="searchProduct" type="text" required placeholder="Enter product name"></b-form-input>
+          <b-form-input v-model="findProduct.name" type="text" required placeholder="Enter product name"></b-form-input>
         </b-form-group>
         <b-button type="submit">Search</b-button>
       </b-form>
 
-      <div v-show="isShowFind">
-        <li>{{this.findProduct.name}}</li>
-        <li>{{this.findProduct.price}}</li>
-        <li>{{this.findProduct.amount}}</li>
+      <div v-show="showChange[10]">
+        <li>{{findProduct.name}}</li>
+        <li>{{findProduct.price}}</li>
+        <li>{{findProduct.amount}}</li>
         <b-button @click.prevent="deleteProductFunction(findProduct.name)">delete</b-button>
-        <b-button>change</b-button>
+        <b-button @click="isShowResult = !isShowResult">change</b-button>
 
-        <b-form v-show="isShowResult">
+        <b-form v-show="isShowResult" @submit.prevent="submitChange">
           <b-form-group label-cols="4" label-cols-lg="2" label="Product name:">
-            <b-form-input v-model="addProduct.name" type="text" required></b-form-input>
+            <b-form-input v-model="findProduct.name" type="text" required></b-form-input>
           </b-form-group>
           <b-form-group label-cols="4" label-cols-lg="2" label="Product price:">
-            <b-form-input v-model="addProduct.price" type="number" required></b-form-input>
+            <b-form-input v-model="findProduct.price" type="number" required></b-form-input>
           </b-form-group>
           <b-form-group label-cols="4" label-cols-lg="2" label="Product size:">
-            <b-form-input v-model="addProduct.size" type="number" required></b-form-input>
+            <b-form-input v-model="findProduct.size" type="text" required></b-form-input>
           </b-form-group>
           <b-form-group label-cols="4" label-cols-lg="2" label="Product amount:">
-            <b-form-input v-model="addProduct.amount" type="number" required></b-form-input>
+            <b-form-input v-model="findProduct.amount" type="number" required></b-form-input>
           </b-form-group>
           <b-form-group label-cols="4" label-cols-lg="2" label="Product description:">
-            <b-form-textarea rows="3" v-model="addProduct.description" type="text" required></b-form-textarea>
+            <b-form-textarea rows="3" v-model="findProduct.description" type="text" required></b-form-textarea>
           </b-form-group>
           <b-form-group label-cols="4" label-cols-lg="2" label="Product category:">
-            <b-form-input v-model="addProduct.category" type="text" required></b-form-input>
+            <b-form-input v-model="findProduct.category" type="text" required></b-form-input>
           </b-form-group>
-          <b-button type="submit">Next</b-button>
+          <b-button type="submit">submit</b-button>
         </b-form>
       </div>
 
       <div>
-        <h4>Career list</h4>
+        <h4>Products list</h4>
         <hr>
         <li v-for="(product, index) in productData" :key="index">
           {{product.name}}
@@ -99,14 +98,25 @@
           <button @click.prevent="deleteProductFunction(product.name)">delete</button>
           <button @click.prevent="clickChangeProduct(index, product.name, product.price, product.size, product.amount, product.description, product.category)">change</button>
           <b-form @submit.prevent="submitChange" v-show="showChange[index]">
-            <b-form-group label-cols="4" label-cols-lg="2" label="link:">
-              <b-form-input v-model="changeForm.title" type="text" required></b-form-input>
+            <b-form-group label-cols="4" label-cols-lg="2" label="Product name:">
+              <b-form-input v-model="findProduct.name" type="text" required></b-form-input>
             </b-form-group>
-            <b-form-group label-cols="4" label-cols-lg="2" label="content:">
-              <b-form-input v-model="changeForm.content" type="text" required></b-form-input>
+            <b-form-group label-cols="4" label-cols-lg="2" label="Product price:">
+              <b-form-input v-model="findProduct.price" type="number" required></b-form-input>
             </b-form-group>
-            <b-form-checkbox v-model="changeForm.checkbox" value="checked" unchecked-value="unchecked">Move to the front</b-form-checkbox>
-            <b-button type="submit" >Submit change</b-button>
+            <b-form-group label-cols="4" label-cols-lg="2" label="Product size:">
+              <b-form-input v-model="findProduct.size" type="number" required></b-form-input>
+            </b-form-group>
+            <b-form-group label-cols="4" label-cols-lg="2" label="Product amount:">
+              <b-form-input v-model="findProduct.amount" type="number" required></b-form-input>
+            </b-form-group>
+            <b-form-group label-cols="4" label-cols-lg="2" label="Product description:">
+              <b-form-textarea rows="3" v-model="findProduct.description" type="text" required></b-form-textarea>
+            </b-form-group>
+            <b-form-group label-cols="4" label-cols-lg="2" label="Product category:">
+              <b-form-input v-model="findProduct.category" type="text" required></b-form-input>
+            </b-form-group>
+            <b-button type="submit">submit</b-button>
           </b-form>
           <hr>
         </li>
@@ -122,8 +132,9 @@
 </template>
 
 <script>
+import VueCropper from "vue-cropperjs"
 import 'cropperjs/dist/cropper.css'
-import VueCropper from "vue-cropperjs";
+
 
 export default {
   components: { VueCropper },
@@ -140,10 +151,10 @@ export default {
 
       isShowAdd: true,
       isShowCrop: false,
-      isShowCrop2: false,
       isShowFind: false,
       isShowResult: false,
       showFindChange: false,
+      currentPage: 1,
 
       showChange: [false, false, false, false, false, false, false, false, false, false, false],
       searchProduct: '',
@@ -157,6 +168,7 @@ export default {
         amount: '',
         description: '',
         category: '',
+        path: '',
       },
 
       findProduct: {
@@ -166,26 +178,52 @@ export default {
         amount: '',
         description: '',
         category: '',
+        path: '',
       }
     }
   },
 
   methods: {
-    saveImage() {
+    async checkName() {
+      await this.$axios.get(`/admin/findProduct?name=${this.addProduct.name}`).then(res=>{
+        console.log(res.data)
+        if (res.data === 'exist'){
+          alert("Product already exist")
+          this.addProduct.name = ''
+          this.addProduct.price = ''
+          this.addProduct.size = ''
+          this.addProduct.amount = ''
+          this.addProduct.description = ''
+          this.addProduct.category = ''
+          this.addProduct.path = ''
+        }
+      })
+    },
+
+    async addProductFunction() {
+      await this.$axios.post('/admin/addProduct', this.addProduct).then(res=>{
+        alert(res.data)
+        this.isShowAdd = false
+        this.isShowCrop = true
+      })
+    },
+
+    savePhoto() {
       this.cropedImage = this.$refs.cropper.getCroppedCanvas().toDataURL()
       this.$refs.cropper.getCroppedCanvas().toBlob((blob) => {
         const formData = new FormData()
         formData.append('product_photo', blob, 'name.jpeg')
+        alert("add product_photo")
         formData.append('name', this.addProduct.name)
+        alert("add name")
         this.$axios.post('/admin/addPhoto', formData, {
           headers: {
             'Content-Type': 'multipart/form-data'
           }
         }).then(res=>{
-          this.addProduct.path = "http://localhost:3000/" + res.data
-        })
-      }, this.mime_type)
-      this.$router.go(0)
+          console.log(res.data)
+          this.$router.go(0)
+        })}, this.mime_type)
     },
 
     onFileSelect(e) {
@@ -205,46 +243,29 @@ export default {
       }
     },
 
-    async addProductFunction() {
-      let result = false
-      await this.$axios.get(`/admin/findProduct?name=${this.addProduct.name}`).then(res=>{
-        if (res.data === 'not found') {
-          result = true
-        }
-      })
-      if (result) {
-        await this.$axios.post('/admin/addProduct', this.addProduct).then(res=>{
-          console.log(res.data)
-          this.isShowAdd = false
-          this.isShowCrop = true
-        })
-      } else {
-        alert('product already exist')
-        this.addProduct.description = ''
-        this.addProduct.name = ''
-        this.addProduct.amount = ''
-        this.addProduct.category = ''
-        this.addProduct.price = ''
-        this.addProduct.size = ''
-      }
-    },
-
     async findProductFunction(){
-      const url = `/admin/findProduct?name=${this.searchProduct}`
+      const url = `/admin/findProduct?name=${this.findProduct.name}`
       await this.$axios.get(url).then(res=>{
-        if (res.data === 'not found'){
+        if (res.data === 'not exist'){
           alert("product not exist")
         } else {
+          console.log(res.data)
           this.findProduct.name = res.data.name
           this.findProduct.price = res.data.price
           this.findProduct.size = res.data.size
           this.findProduct.amount = res.data.amount
           this.findProduct.description = res.data.description
           this.findProduct.category = res.data.category
-          this.isShowFind = true
+          this.findProduct.path = res.data.path
+          for (let i = 0; i < 11; i++){
+            this.$set(this.showChange, i, false)
+          }
+          this.$set(this.showChange, 10, true)
+          this.isShowResult = false
         }
       })
     },
+
     async deleteProductFunction(name) {
       let answer = window.confirm("Are you sure?")
       if (answer){
@@ -253,6 +274,13 @@ export default {
           this.$router.go(0)
         })
       }
+    },
+
+    async submitChange() {
+      await this.$axios.post('/admin/changeProduct', this.findProduct).then(res=>{
+        console.log(res.data)
+        this.$router.go(0)
+      })
     },
 
     async getData() {
@@ -269,6 +297,7 @@ export default {
         }
       })
     },
+
     clickChangeProduct(index, name, price, size, amount, description, category) {
       for (let i = 0; i < 11; i++){
         this.$set(this.showChange, i, false)
@@ -291,22 +320,17 @@ export default {
           this.$set(this.showChange, i, false)
         }
         this.showFindChange = false
-        this.findProduct.name = res.data.name
-        this.findProduct.price = res.data.price
-        this.findProduct.size = res.data.size
-        this.findProduct.amount = res.data.amount
-        this.findProduct.description = res.data.description
-        this.findProduct.category = res.data.category
+        this.findProduct.name = ''
+        this.findProduct.price = ''
+        this.findProduct.size = ''
+        this.findProduct.amount = ''
+        this.findProduct.description = ''
+        this.findProduct.category = ''
 
       })
     },
 
-    async submitChange() {
-      await this.$axios.post('/admin/changeProduct', this.findProduct).then(res=>{
-        console.log(res.data)
-        this.$router.go(0)
-      })
-    }
+
 
 
   },
