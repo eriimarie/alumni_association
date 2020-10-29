@@ -1,9 +1,8 @@
 <template>
   <div>
-    <b-card no-body>
+    <b-card no-body v-show="dataReady">
       <b-tabs card>
         <b-tab no-body title="Pending">
-          {{pendingData}}
           <li v-for="(pending, index) in pendingData" v-bind:key="index">
             {{pending.orderNumber}}
             <br>
@@ -19,7 +18,7 @@
           </li>
           <b-pagination
               v-model="currentPendingPage"
-              :total-rows="pendingRows"
+              :total-rows="this.pendingPageData.length"
               :per-page="10"
               @click.native="changePendingPage(currentPendingPage)"
           ></b-pagination>
@@ -34,7 +33,7 @@
           </li>
           <b-pagination
               v-model="currentShippingPage"
-              :total-rows="shippingRows"
+              :total-rows="this.shippingPageData.length"
               :per-page="10"
               @click.native="changeShippingPage(currentShippingPage)"
           ></b-pagination>
@@ -49,7 +48,7 @@
 
           <b-pagination
               v-model="currentDeliveredPage"
-              :total-rows="deliveredRows"
+              :total-rows="this.deliveredPageData.length"
               :per-page="10"
               @click.native="changeDeliveredPage(currentDeliveredPage)"
           ></b-pagination>
@@ -73,6 +72,7 @@ export default {
       currentFindPage: 1,
       findOrderEmail: '',
       showResult: false,
+      dataReady: false,
 
       showPendingChange: [false, false, false, false, false, false, false, false, false, false],
       showFindOrderChange: [false, false, false, false, false, false, false, false, false, false],
@@ -99,6 +99,11 @@ export default {
 
 
     }
+  },
+  created() {
+    this.getPendingData()
+    this.getShippingData()
+    this.getDeliveredData()
   },
 
   methods: {
@@ -129,75 +134,95 @@ export default {
 
     async getPendingData() {
       await this.$axios.get('/admin/findPending').then(res=>{
-        /**
-         * add
-         */
-        this.pendingPageData[0] = res.data[0]
-
-        // alert(this.pendingPageData[0].orderNumber)
-        // alert(res.data[1].orderNumber)
-        for (let i = 1; i < 7; i++){
-
-          if (this.pendingPageData[i-1].orderNumber !== res.data[i].orderNumber){
-            this.pendingPageData[i] = res.data[i]
-          }
-        }
-        /**
-         * ----
-         */
-
-        let arrayLength
-        if(this.pendingPageData.length < 10){
-          arrayLength = this.pendingPageData.length
+        if (res.data.length === 0){
+          console.log("no data")
         } else {
-          arrayLength = 10
-        }
-        for (let i = 0; i < arrayLength; i++){
-          this.pendingData[i] = this.pendingPageData[i]
+          this.pendingPageData[0] = res.data[0]
+          let indexForPage = 1
+
+          for (let i = 1; i < res.data.length; i++){
+            if (this.pendingPageData[indexForPage-1].orderNumber !== res.data[i].orderNumber){
+              this.pendingPageData[indexForPage] = res.data[i]
+              indexForPage++
+            }
+          }
+          let arrayLength
+          if(this.pendingPageData.length < 10){
+            arrayLength = this.pendingPageData.length
+          } else {
+            arrayLength = 10
+          }
+          for (let j = 0; j < arrayLength; j++){
+            this.pendingData[j] = this.pendingPageData[j]
+          }
         }
       })
     },
 
     async getShippingData() {
       await this.$axios.get('/admin/findShipping').then(res=>{
-        this.shippingPageData = res.data
-        let arrayLength
-        if(this.shippingPageData.length < 10){
-          arrayLength = this.shippingPageData.length
+        if (res.data.length === 0){
+          console.log("no data")
         } else {
-          arrayLength = 10
-        }
-        for (let i = 0; i < arrayLength; i++){
-          this.shippingData[i] = this.shippingPageData[i]
+          this.shippingPageData[0] = res.data[0]
+          let indexForPage = 1
+          for (let i = 1; i < res.data.length; i++){
+            if (this.shippingPageData[indexForPage-1].orderNumber !== res.data[i].orderNumber){
+              this.shippingPageData[indexForPage] = res.data[i]
+              indexForPage++
+            }
+          }
+          let arrayLength
+          if(this.shippingPageData.length < 10){
+            arrayLength = this.shippingPageData.length
+          } else {
+            arrayLength = 10
+          }
+          for (let j = 0; j < arrayLength; j++){
+            this.shippingData[j] = this.shippingPageData[j]
+          }
         }
       })
     },
 
     async getDeliveredData() {
       await this.$axios.get('/admin/findDelivered').then(res=>{
-        this.deliveredPageData = res.data
-        let arrayLength
-        if(this.deliveredPageData.length < 10){
-          arrayLength = this.deliveredPageData.length
+        if (res.data.length === 0){
+          console.log("no data")
         } else {
-          arrayLength = 10
+          this.deliveredPageData[0] = res.data[0]
+          let indexForPage = 1
+          for (let i = 1; i < res.data.length; i++){
+            if (this.deliveredPageData[indexForPage-1].orderNumber !== res.data[i].orderNumber){
+              this.deliveredPageData[indexForPage] = res.data[i]
+              indexForPage++
+            }
+          }
+          let arrayLength
+          if(this.deliveredPageData.length < 10){
+            arrayLength = this.deliveredPageData.length
+          } else {
+            arrayLength = 10
+          }
+          for (let j = 0; j < arrayLength; j++){
+            this.deliveredData[j] = this.deliveredPageData[j]
+          }
         }
-        for (let i = 0; i < arrayLength; i++){
-          this.deliveredData[i] = this.deliveredPageData[i]
-        }
+        this.dataReady = true
       })
     },
 
-    async changePendingPage(currentPage) {
-      const newUrl = `/admin/changePage?page=${currentPage}&status=pending`
-      await this.$axios.get(newUrl).then(res=>{
-        this.pendingData = res.data
-        for (let i = 0; i < 10; i++){
-          this.$set(this.showPendingChange, i, false)
-        }
+    changePendingPage(currentPage) {
+      let showNumber = this.pendingPageData.length - (10 * (currentPage - 1))
+      if (showNumber > 10){
+        showNumber = 10
+      }
+      this.pendingData = []
+      for (let i = 0; i < showNumber; i++){
+        this.pendingData[i] = this.pendingPageData[(10 * currentPage) - (10 - i)]
+      }
         this.addTrackingForm.orderNumber = ''
         this.addTrackingForm.tracking = ''
-      })
     },
 
     // async changeFindPage(currentPage) {
@@ -212,18 +237,26 @@ export default {
     //   })
     // },
 
-    async changeShippingPage(currentPage) {
-      const newUrl = `/admin/changePage?page=${currentPage}&status=shipped`
-      await this.$axios.get(newUrl).then(res=>{
-        this.shippingData = res.data
-      })
+    changeShippingPage(currentPage) {
+      let showNumber = this.shippingPageData.length - (10 * (currentPage - 1))
+      if (showNumber > 10){
+        showNumber = 10
+      }
+      this.shippingData = []
+      for (let i = 0; i < showNumber; i++){
+        this.shippingData[i] = this.shippingPageData[(10 * currentPage) - (10 - i)]
+      }
     },
 
-    async changeDeliveredPage(currentPage) {
-      const newUrl = `/admin/changePage?page=${currentPage}&status=delivered`
-      await this.$axios.get(newUrl).then(res=>{
-        this.deliveredData = res.data
-      })
+    changeDeliveredPage(currentPage) {
+      let showNumber = this.deliveredPageData.length - (10 * (currentPage - 1))
+      if (showNumber > 10){
+        showNumber = 10
+      }
+      this.deliveredData = []
+      for (let i = 0; i < showNumber; i++){
+        this.deliveredData[i] = this.deliveredPageData[(10 * currentPage) - (10 - i)]
+      }
     },
 
 
@@ -263,29 +296,6 @@ export default {
     }
   },
 
-  mounted() {
-    this.getPendingData()
-    this.getShippingData()
-    this.getDeliveredData()
-  },
-
-  computed: {
-    pendingRows() {
-      return this.pendingPageData.length
-    },
-
-    shippingRows() {
-      return this.shippingPageData.length
-    },
-
-    deliveredRows() {
-      return this.deliveredPageData.length
-    },
-
-    // findRows() {
-    //   return this.findData.length
-    // }
-  }
 
 
 }

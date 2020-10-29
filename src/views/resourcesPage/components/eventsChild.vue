@@ -4,7 +4,6 @@
       <p @click="detailEvent(event.sortDate)">{{event.title}}</p>
       <p>{{event.content}}</p>
       <p>{{event.date}}</p>
-
     </li>
 
     <b-pagination

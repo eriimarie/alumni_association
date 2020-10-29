@@ -14,15 +14,17 @@
 
       <b-form-group id="input-group-3" >
         <b-form-checkbox-group v-model="form.checked" id="checkboxes-3">
-          <b-form-checkbox id="checkbox" value="me" >Remember me</b-form-checkbox>
-          <b-link href="*******">Forget password</b-link>
+          <b-form-checkbox id="checkbox" v-model="me" >Remember me</b-form-checkbox>
+          <b-link href="/forget">Forget password</b-link>
         </b-form-checkbox-group>
-      </b-form-group >
-
+      </b-form-group>
       <b-row align-h="around">
         <b-button type="submit" variant="primary" >Login</b-button>
-        <b-button type="submit" variant="danger" >Sign in</b-button>
+        <a href="/register"><b-button variant="danger" >Sign up</b-button></a>
+
       </b-row>
+
+
 
 
     </b-form>
@@ -34,22 +36,29 @@
 export default {
   data() {
     return {
+      me: [],
       form: {
         email: '',
         password: '',
-        checked: []
       },
       show: true
     }
   },
   methods: {
-    onSubmit(){
-      this.$axios.post('/login',this.form).then(res=>{
-        alert(res.data)
-        if (res.data === "valid password, login successfully"){
-          this.$cookies.set('email', this.form.email)
-          this.$cookies.set('password', this.form.password)
-          this.$router.go(-1)
+    async onSubmit(){
+      await this.$axios.post('/login',this.form).then(res=>{
+        if (typeof (res.data) === 'object'){
+          if (this.me === [true]){
+            this.$cookies.set('email', res.data.email, 60 * 60 * 24 * 30)
+            this.$cookies.set('isAdmin', res.data.isAdmin, 60 * 60 * 24 * 30)
+            this.$router.go(-1)
+          } else {
+            this.$cookies.set('email', res.data.email)
+            this.$cookies.set('isAdmin', res.data.isAdmin)
+            this.$router.go(-1)
+          }
+        } else {
+          alert(res.data)
         }
       }).catch(function (err){
         alert(err)})

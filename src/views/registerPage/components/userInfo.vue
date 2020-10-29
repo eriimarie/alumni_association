@@ -1,6 +1,6 @@
 <template>
   <div id="box">
-    <b-form @submit="onSubmit">
+    <b-form @submit.prevent="onSubmit">
       <h3>Register</h3>
       <hr>
 

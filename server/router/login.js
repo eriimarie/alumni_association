@@ -6,17 +6,16 @@ const router = express.Router()
 
 router.post('/', async (req,res)=>{
     console.log(req.body)
-    const user = await register.findOne({email:req.body.email})
-    console.log(user)
-    if (!user){return res.send('Please register first before login.')}
-    const dbPassword = user.password
-    const password = req.body.password
-    if (dbPassword !== password){
-        return res.send('Invalid password, please try again or reset password.')}
-    else {
-        return res.send('valid password, login successfully')
+    try {
+        const user = await register.findOne({email:req.body.email})
+        if (user.password === req.body.password) {
+            return res.send(user)
+        } else{
+            return res.send("Please check your email and password")
+        }
+    } catch (err){
+        return res.send("Please check your email and password")
     }
-
 })
 
 module.exports = router

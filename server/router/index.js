@@ -4,6 +4,9 @@ const loginRouter = require('./login')
 const resourcesRouter = require('./resources')
 const volunteerRouter = require('./volunteer')
 const adminRouter = require('./admin')
+const shoppingRouter = require('./shopping')
+const cartRouter = require('./cart')
+const forgetRouter = require('./forget')
 
 module.exports = app => {
     app.use('/register', registerRouter)
@@ -12,4 +15,7 @@ module.exports = app => {
     app.use('/resources', resourcesRouter)
     app.use('/volunteer', volunteerRouter)
     app.use('/admin', adminRouter)
+    app.use('/shopping',shoppingRouter)
+    app.use('/cart',cartRouter)
+    app.use('/forget', forgetRouter)
 }

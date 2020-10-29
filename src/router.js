@@ -1,14 +1,11 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import donatePage from './views/donatePage/Donate'
 import resourcesPage from './views/resourcesPage/Resources'
 import careerChild from "./views/resourcesPage/components/careerChild"
 import eventsChild from "./views/resourcesPage/components/eventsChild"
 import loginPage from './views/loginPage/Login'
 import profilePage from './views/profilePage/Profile'
 import registerPage from './views/registerPage/Register'
-import shoppingCartPage from './views/shoppingCartPage/ShoppingCart'
-import shoppingPage from './views/shoppingPage/Shopping'
 import mainPage from './views/mainPage/Main'
 import volunteerPage from './views/volunteerPage/Volunteer'
 import leadershipChild from "./views/volunteerPage/components/leadershipChild"
@@ -28,6 +25,15 @@ import handleOrder from "./views/adminPage/components/handleOrder"
 import handleShopping from "./views/adminPage/components/handleShopping"
 import handleUser from "./views/adminPage/components/handleUser"
 import handleVolunteer from "./views/adminPage/components/handleVolunteer"
+import detailProducts from "@/views/shoppingPage/components/detailProducts";
+import productsChild from "@/views/shoppingPage/components/productsChild";
+import ShoppingCart from "@/views/shoppingCartPage/ShoppingCart";
+import OrderPage from "@/views/shoppingCartPage/OrderPage";
+import PaymentPage from "@/views/shoppingCartPage/PaymentPage";
+import Donate from "@/views/donatePage/Donate";
+import pay from "@/views/donatePage/components/pay";
+import thanksGiving from "@/views/donatePage/components/thanksGiving";
+import forgetPage from "./views/forgetPage/Forget"
 
 
 Vue.use(Router);
@@ -71,8 +77,20 @@ const router = new Router({
             ]
         },
         {
+            path: '/forget',
+            component: forgetPage,
+        },
+        {
             path: '/donate',
-            component: donatePage,
+            component: Donate,
+        },
+        {
+            path: '/pay',
+            component: pay,
+        },
+        {
+            path: '/thanks',
+            component: thanksGiving,
         },
         {
             path: '/resources',
@@ -95,6 +113,14 @@ const router = new Router({
         {
             path: '/resources/events/:id',
             component: detailEvents
+        },
+        {
+            path: '/shopping',
+            component: productsChild,
+        },
+        {
+            path: '/shopping/:id',
+            component: detailProducts,
         },
         {
             path:'/user',
@@ -139,11 +165,15 @@ const router = new Router({
         },
         {
             path: '/cart',
-            component: shoppingCartPage,
+            component: ShoppingCart,
         },
         {
-            path: '/shopping',
-            component: shoppingPage,
+            path:'/order',
+            component: OrderPage,
+        },
+        {
+            path:'/payment',
+            component: PaymentPage,
         },
         {
             path: '/volunteer',
@@ -186,15 +216,30 @@ router.beforeEach((to, from, next) => {
     console.log(to)
     console.log(to.path === '/volunteer')
     console.log(window.$cookies.get('email'))
-    if (to.path.includes('volunteer') || to.path.includes('profile')){
+    if (to.path.includes('volunteer') || to.path.includes('profile')|| to.path.includes('shopping')||to.path.includes('cart')){
         if (window.$cookies.get('email') != null) {
             next()
         } else {
             window.alert('Please login to continue')
             next('/login')
         }
+    } else if (to.path.includes('admin')) {
+        if (window.$cookies.get('isAdmin') === "1") {
+            next()
+        } else {
+            window.alert('You don\'t have the right the access the page')
+            next('/index')
+        }
+    }else if (to.path.includes('forget') || to.path.includes('login')) {
+        if (window.$cookies.get('email') === null) {
+            next()
+        } else {
+            window.alert('You already signed in')
+            next('/index')
+        }
     }
     next()
 })
+
 
 export default router;

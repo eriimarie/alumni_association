@@ -7,7 +7,7 @@ const orderSchema = new Schema({
     status:{type:String, default: 'pending'},
     track:{type:String, default: 'hasn\'t shipped'},
     product:{type:String},
-    amount:{amount: Number},
+    amount:{type: Number, require: true},
     firstName:{type:String, require:true},
     lastName:{type:String, require:true},
     cellphone:{type:String, require:true},

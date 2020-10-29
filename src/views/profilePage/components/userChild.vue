@@ -75,7 +75,6 @@
         </b-row>
       </b-container>
     </b-form>
-    {{userData}}
   </div>
 </template>
 

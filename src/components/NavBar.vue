@@ -5,34 +5,26 @@
 
       <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 
-      <b-collapse id="nav-collapse" is-nav>
-
-
-        <!-- Right aligned nav items -->
-        <b-navbar-nav class="ml-auto">
-          <b-nav-item href="/news">News</b-nav-item>
-          <b-nav-item href="/events">Events</b-nav-item>
+      <b-collapse id="nav-collapse"  is-nav>
+        <b-navbar-nav class="mx-auto">
+          <b-nav-item href="/resources/career">Career</b-nav-item>
+        </b-navbar-nav>
+        <b-navbar-nav class="mx-auto">
+          <b-nav-item href="/resources/events">Events</b-nav-item>
+        </b-navbar-nav>
+        <b-navbar-nav class="mx-auto">
           <b-nav-item href="/shopping">Market</b-nav-item>
-          <b-nav-item href="/donate"><b-button size="sm" class="my-2 my-sm-0" type="submit">Donate</b-button></b-nav-item>
-
-
-          <b-nav-item-dropdown text="Lang" right>
-            <b-dropdown-item href="#">EN</b-dropdown-item>
-            <b-dropdown-item href="#">ES</b-dropdown-item>
-            <b-dropdown-item href="#">RU</b-dropdown-item>
-            <b-dropdown-item href="#">FA</b-dropdown-item>
+        </b-navbar-nav>
+        <b-navbar-nav  class="ml-auto" v-show="isLogin">
+          <b-avatar :src="this.path" v-show="isLogin"></b-avatar>
+          <b-nav-item-dropdown text="User">
+            <b-dropdown-item href="/profile">Profile</b-dropdown-item>
+            <b-dropdown-item :href="this.cart">Cart</b-dropdown-item>
+            <b-dropdown-item @click="signOut">Sign Out</b-dropdown-item>
           </b-nav-item-dropdown>
-
-
-          <!-- js, if not logged in, go to log in page, otherwise do next-->
-          <b-nav-item-dropdown right>
-            <!-- Using 'button-content' slot -->
-            <template v-slot:button-content>
-              <em>User</em>
-            </template>
-            <b-dropdown-item href="#">Profile</b-dropdown-item>
-            <b-dropdown-item href="#">Sign Out</b-dropdown-item>
-          </b-nav-item-dropdown>
+        </b-navbar-nav>
+        <b-navbar-nav v-show="!isLogin">
+          <b-button href="/login">Log in</b-button>
         </b-navbar-nav>
       </b-collapse>
     </b-navbar>
@@ -41,6 +33,38 @@
 
 <script>
 export default {
+  data() {
+    return{
+      isLogin: false,
+      path: '',
+      cart: '',
+    }
+  },
+
+  mounted() {
+    this.getData()
+  },
+
+  methods: {
+    async getData() {
+      await this.$axios.post('/profile/user', {email: this.$cookies.get('email')}).then(res=>{
+        if (res.data === ''){
+          this.isLogin = false
+        } else {
+          this.isLogin = true
+          this.path = "http://localhost:3000/" + res.data.avatarPath
+          this.cart = "http://localhost:8080/cart?email=" + this.$cookies.get('email')
+        }
+      })
+    },
+
+    signOut() {
+      this.$cookies.set('email', '')
+      this.$cookies.set('isAdmin', '')
+      this.isLogin = false
+      this.$router.push('index')
+    }
+  }
 
 }
 </script>
@@ -49,5 +73,8 @@ export default {
   #box{
     max-width: 1200px;
     margin: 0 auto;
+  }
+  .profile-img {
+    border-radius: 50%;
   }
 </style>

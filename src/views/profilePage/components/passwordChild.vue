@@ -13,7 +13,6 @@
 
     <div id="change" v-show="isShowChange">
       <h5>Please enter your new password</h5>
-      {{passwordForm}}
       <hr>
       <b-form @submit="submitChange">
         <b-form-group label-cols="3" :class="{'passwordError':isPassword1}" label="Password (*):">
@@ -68,13 +67,6 @@ export default {
     this.getData()
   },
   methods:{
-    /**
-     *页面总是跳转回来
-     * 安全问题：
-     *    密码从cookies中提取
-     *    login页面将账号密码保存到cookie里（未加密）
-     *    submitLogin方法不走后端，直接对比
-     **/
     async getData(){
       await this.$axios.post('/profile/user', {email:this.$cookies.get('email')}).then(res=>{
         const data = res.data
@@ -83,7 +75,7 @@ export default {
       })
     },
 
-    checkPassword: function () {
+    checkPassword () {
       if (!(/\d/.test(this.passwordForm.password) && /[a-z]/.test(this.passwordForm.password) && /[A-Z]/.test(this.passwordForm.password) &&
           /[!@#$%^&*)(+=._-]/.test(this.passwordForm.password) && this.passwordForm.password.length >= 8)) {
         this.isPassword1 = true;
@@ -95,7 +87,7 @@ export default {
       }
     },
 
-    comparePassword: function () {
+    comparePassword () {
       console.log(this.passwordForm.password);
       console.log(this.passwordForm.password2);
       console.log(this.passwordForm.password2 === this.passwordForm.password);
@@ -111,7 +103,7 @@ export default {
 
     submitLogin(){
       this.$axios.post('/login',this.loginForm).then(res=>{
-        if(res.data === 'valid password, login successfully'){
+        if(typeof (res.data) === 'object'){
           this.isShowLogin = false
           this.isShowChange = true
         } else{
@@ -123,6 +115,7 @@ export default {
 
     submitChange(){
       this.$axios.post('/profile/changePassword', this.passwordForm).then(res=>{
+        alert("success")
         console.log(res)
       })
     }

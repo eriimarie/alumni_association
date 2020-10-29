@@ -70,6 +70,12 @@ router.post('/changePhoto', upload.single('profile_photo'), async (req, res)=>{
     return res.send(req.file.path)
 })
 
+router.get('/orderNumber', async (req, res)=>{
+    console.log(req.query.orderNumber)
+    const foundOrder = await orders.find({orderNumber: req.query.orderNumber}).sort({orderNumber: -1})
+    return res.send(foundOrder)
+})
+
 
 
 module.exports = router
