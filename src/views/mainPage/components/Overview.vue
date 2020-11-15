@@ -13,7 +13,7 @@
           <a href="/#"><b-img fluid :src="require('@/assets/career.jpg')"></b-img></a>
         </b-col>
         <b-col sm="4" class="img">
-          <a href="/#"><b-img fluid :src="require('@/assets/shop.jpg')"></b-img></a>
+          <a href="/shopping"><b-img fluid :src="require('@/assets/shop.jpg')"></b-img></a>
         </b-col>
       </b-row>
     </b-container>
