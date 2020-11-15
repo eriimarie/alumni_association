@@ -19,7 +19,8 @@
       <b-button @click.prevent="deleteItems(index)">Delete item</b-button>
 
     </b-card>
-    <b-button href="/order">Check out!</b-button>
+      <b-button href="/order" v-show="!emptyPage">Check out!</b-button>
+
   </div>
 </template>
 

@@ -15,7 +15,7 @@
       <b-form-group id="input-group-3" >
         <b-form-checkbox-group v-model="form.checked" id="checkboxes-3">
           <b-form-checkbox id="checkbox" v-model="me" >Remember me</b-form-checkbox>
-          <b-link href="/forget">Forget password</b-link>
+          <b-link href="/forget">Forgot password</b-link>
         </b-form-checkbox-group>
       </b-form-group>
       <b-row align-h="around">

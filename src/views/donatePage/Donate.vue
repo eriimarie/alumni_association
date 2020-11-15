@@ -8,17 +8,17 @@
 
     </b-card>
     <b-form-group label="Donate options:">
-      <b-form-radio v-model="selected"  name="some-radios" value="A">$ 5</b-form-radio>
-      <b-form-radio v-model="selected" name="some-radios" value="B">$ 10</b-form-radio>
-      <b-form-radio v-model="selected"  name="some-radios" value="C">$ 20</b-form-radio>
-      <b-form-radio v-model="selected" name="some-radios" value="D">$ 50</b-form-radio>
-      <b-form-radio v-model="selected" name="some-radios" value="E">$
-        <b-form-input @click="clicked" id="input-2"  type="number" min="1" max="1000" required placeholder="Enter the amount here."
+      <b-form-radio v-model="selected" name="some-radios" value="5">$ 5</b-form-radio>
+      <b-form-radio v-model="selected" name="some-radios" value="10">$ 10</b-form-radio>
+      <b-form-radio v-model="selected" name="some-radios" value="20">$ 20</b-form-radio>
+      <b-form-radio v-model="selected" name="some-radios" value="50">$ 50</b-form-radio>
+      <b-form-radio v-model="selected" name="some-radios" :value="value">$ {{value}}
+        <b-form-input @click="clicked" id="input-2" v-model="value" type="range" min="1" max="300" step="1" required placeholder="Enter the amount here."
         ></b-form-input>
       </b-form-radio>
 
     </b-form-group>
-    <b-button href="/pay" variant="primary">Donate now!</b-button>
+    <b-button href="/pay" variant="primary">Donate $ {{selected}}</b-button>
 
 
   </div>
@@ -29,13 +29,20 @@ export default {
   data() {
     return {
       selected:'',
+      value: 1,
 
       show: true
     }
   },
   methods:{
     clicked(){
-      this.selected = 'E'
+      this.selected = this.value
+    },
+
+    check() {
+      if (this.selected < 0) {
+        this.selected = ''
+      }
     }
   }
 }

@@ -1,11 +1,12 @@
 <template>
   <div id="box">
-    <b-form  v-if="show">
+    <b-form @submit.prevent="onSubmit">
       <b-form-group label-cols="4" label-cols-lg="2" label="Select card type (*):">
         <b-form-select id="cardType" v-model="form.card" type="text" :options="VisaOrMaster" required></b-form-select>
       </b-form-group>
       <b-form-group label-cols="4" label-cols-lg="2" id="input-group-1" label="Fullname:" label-for="input-1">
         <b-form-input id="input-1" v-model="form.fullName" type = "text" required placeholder="Please enter full name as shown on card">
+
         </b-form-input>
       </b-form-group>
 
@@ -21,10 +22,12 @@
       </b-form-group>
       <div id="shippingInfo">
         <b>Enter billing Address:</b>
+
         <b-form-group label-cols="4" label-cols-lg="2" label="Street address (*):">
           <b-form-input id="streetAddress" v-model="form.streetAddress" type="text" placeholder="Enter street address"
                         required></b-form-input>
         </b-form-group>
+
         <b-form-group label-cols="4" label-cols-lg="2" label="Street address 2 (optional):">
           <b-form-input id="streetAddress2" v-model="form.streetAddress2" type="text"
                         placeholder="optional"></b-form-input>
@@ -46,7 +49,7 @@
 
       </div>
       <b-row align-h="around">
-        <b-button href="/thanks" type="submit" variant="primary" >Confirm</b-button>
+        <b-button type="submit" variant="primary" >Confirm</b-button>
       </b-row>
 
     </b-form>
@@ -79,18 +82,12 @@ export default {
       show: true
     }
   },
-  // methods: {
-  //   onSubmit(){
-  //     this.$axios.post('/payment',this.form).then(res=>{
-  //       alert(res.data)}).
-  //     catch(function (err){
-  //       alert(err)})
-  //
-  //
-  //
-  //   }
-  //
-  // },
+  methods: {
+    onSubmit(){
+      this.$router.push('/thanks')
+    }
+
+  },
 
 }
 
