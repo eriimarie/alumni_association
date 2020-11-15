@@ -75,13 +75,17 @@ export default {
   methods: {
     async submitEmail() {
       await this.$axios.get(`/forget?email=${this.email}`).then(res=>{
-        this.savedQuestion1 = res.data.question1
-        this.savedQuestion2 = res.data.question2
-        this.savedAnswer1 = res.data.answer1
-        this.savedAnswer2 = res.data.answer2
-        this.form.email = res.data.email
-        this.showEmail = false
-        this.showQuestions = true
+        if (res.data === ""){
+          alert("Account not exist, please check your email")
+        } else {
+          this.savedQuestion1 = res.data.question1
+          this.savedQuestion2 = res.data.question2
+          this.savedAnswer1 = res.data.answer1
+          this.savedAnswer2 = res.data.answer2
+          this.form.email = res.data.email
+          this.showEmail = false
+          this.showQuestions = true
+        }
       })
     },
 
@@ -125,8 +129,8 @@ export default {
     async submitPassword() {
       await this.$axios.post('/forget/change', this.form).then(res=>{
         console.log(res.data)
-        alert("Change successful")
-        this.$router.push('/index')
+        alert("The password has been reset successfully")
+        this.$router.push('/login')
       })
     }
   }

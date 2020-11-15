@@ -6,7 +6,6 @@
       </b-form-group>
       <b-form-group label-cols="4" label-cols-lg="2" id="input-group-1" label="Fullname:" label-for="input-1">
         <b-form-input id="input-1" v-model="form.fullName" type = "text" required placeholder="Please enter full name as shown on card">
-
         </b-form-input>
       </b-form-group>
 
@@ -22,12 +21,10 @@
       </b-form-group>
       <div id="shippingInfo">
         <b>Enter billing Address:</b>
-
         <b-form-group label-cols="4" label-cols-lg="2" label="Street address (*):">
           <b-form-input id="streetAddress" v-model="form.streetAddress" type="text" placeholder="Enter street address"
                         required></b-form-input>
         </b-form-group>
-
         <b-form-group label-cols="4" label-cols-lg="2" label="Street address 2 (optional):">
           <b-form-input id="streetAddress2" v-model="form.streetAddress2" type="text"
                         placeholder="optional"></b-form-input>

@@ -43,9 +43,9 @@
         </b-form-group>
 
         <b-form-group label-cols="4" label-cols-lg="2" :class="{'passwordError':isPassword2}"
-                      label="Renter password (*):">
+                      label="Re-enter password (*):">
           <b-form-input id="rePassword" v-model="form.password2" v-on:blur="comparePassword" type="password"
-                        placeholder="Renter password" required></b-form-input>
+                        placeholder="Re-enter password" required></b-form-input>
           <div v-show="isShow" id="passwordNotMatch">
             <span>Please enter the same password</span>
           </div>
@@ -110,14 +110,9 @@
 </template>
 
 <script>
-/**
- *     if cookie.email => index
- * @returns {string}
- */
 export default {
   data() {
     return {
-
       isPassword1: false,
       isPassword2: false,
       isChangeBorder: false,
@@ -162,7 +157,7 @@ export default {
     onSubmit() {
       this.$axios.post('/register', this.form).then(res=>{
         alert(res.data)
-        this.$router.push('/index')
+        this.$router.push('/login')
       }).catch(function (err){
         alert(err)
       })
@@ -190,8 +185,6 @@ export default {
         this.isChangeBorder = false;
       }
     },
-
-
 
     comparePassword: function () {
       console.log(this.form.password);
