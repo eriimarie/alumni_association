@@ -5,6 +5,7 @@ const orders = require('../model/orders')
 const products = require('../model/products')
 const volunteer = require('../model/volunteer')
 const users = require('../model/register')
+const officers = require('../model/officers')
 const router = express.Router()
 const multer = require('multer')
 const fs = require('fs')
@@ -267,6 +268,41 @@ router.post('/addOrder', async (req, res)=>{
     return res.send('success')
 })
 
+router.post('/addOfficer', async (req, res)=>{
+    console.log(req.body)
+    await new officers(req.body).save()
+    return res.send('success')
+})
+
+router.get('/findOfficer', async (req, res)=>{
+    console.log(req.query)
+    const foundOfficer = await officers.findOne({name: req.query.name})
+    console.log(foundOfficer)
+    if (foundOfficer === null){
+        return res.send('not exist')
+    } else {
+        return res.send(foundOfficer)
+    }
+})
+
+
+
+
+
+router.post('/deleteOfficer', async (req, res)=>{
+
+    const result = await officers.deleteOne({name: req.body.name})
+    return res.send(result)
+})
+
+
+router.post('/changeOfficer', async (req, res)=>{
+    console.log(req.body)
+    const result = await officers.updateOne({path: req.body.path}, {name: req.body.name, phone: req.body.phone, email: req.body.email,
+        description: req.body.description})
+    console.log(result)
+    return res.send(result)
+})
 
 
 

@@ -10,13 +10,16 @@
           <b-nav-item href="/resources/career">Career</b-nav-item>
         </b-navbar-nav>
         <b-navbar-nav class="mx-auto">
-          <b-nav-item href="/events">Events</b-nav-item>
+          <b-nav-item href="/resources/events">Events</b-nav-item>
         </b-navbar-nav>
         <b-navbar-nav class="mx-auto">
           <b-nav-item href="/shopping">Market</b-nav-item>
         </b-navbar-nav>
         <b-navbar-nav class="mx-auto">
           <b-nav-item href="/donate">Donate</b-nav-item>
+        </b-navbar-nav>
+        <b-navbar-nav class="mx-auto">
+          <b-nav-item href="/officer">Officer</b-nav-item>
         </b-navbar-nav>
         <b-navbar-nav  class="ml-auto" v-show="isLogin">
           <b-avatar :src="this.path" v-show="isLogin"></b-avatar>

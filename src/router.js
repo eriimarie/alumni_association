@@ -1,7 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import newsPage from './views/newsPage/News'
-// import newsChild from "./views/newsPage/components/newsChild"
 import eventsPage from "./views/eventsPage/Events"
 import up_comingChild from "./views/eventsPage/components/up_comingChild"
 import dinner_danceChild from "./views/eventsPage/components/dinner_danceChild"
@@ -42,7 +41,9 @@ import defaultChild from "./views/adminPage/components/defaultChild"
 import history from "./views/historyPage/History"
 import qa from "./views/Q&APage/Q&APage"
 import contactPage from "./views/contactPage/contactPage"
-
+import officers from "@/views/officerPage/components/officers";
+import officersDetail from "@/views/officerPage/components/officersDetail";
+import handleOfficers from "@/views/adminPage/components/handleofficers";
 
 Vue.use(Router);
 
@@ -79,6 +80,10 @@ const router = new Router({
                     component: handleOrder,
                 },
                 {
+                    path: "handleOfficer",
+                    component: handleOfficers,
+                },
+                {
                     path: "default",
                     component: defaultChild,
                 },
@@ -91,6 +96,14 @@ const router = new Router({
         {
             path: '/history',
             component: history,
+        },
+        {
+            path: '/officer',
+            component: officers,
+        },
+        {
+            path: '/officer/:id',
+            component: officersDetail,
         },
         {
             path: '/contact',

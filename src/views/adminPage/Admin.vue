@@ -10,6 +10,7 @@
             <router-link to="/admin/handleShopping" tag="li" v-show="isShowShopping">Shopping</router-link>
             <router-link to="/admin/handleUser" tag="li" v-show="isShowUser">User</router-link>
             <router-link to="/admin/handleOrder" tag="li" v-show="isShowOrder">Order</router-link>
+            <router-link to="/admin/handleOfficer" tag="li" v-show="isShowOfficer">Officer</router-link>
           </ul>
         </b-col>
         <b-col sm="9">
@@ -30,6 +31,7 @@ export default {
       isShowShopping: false,
       isShowUser: false,
       isShowOrder: false,
+      isShowOfficer: false,
     }
   },
 
@@ -58,6 +60,7 @@ export default {
           this.isShowShopping = true
           this.isShowUser = true
           this.isShowOrder = true
+          this.isShowOfficer = true
       }
     }
   },
