@@ -1,10 +1,11 @@
 <template>
   <div>
-    <li v-for="career in careerData" v-bind:key="career">
-      {{career.title}}
-      <br>
-      {{career.content}}
+    <li v-for="news in newsData" v-bind:key="news">
+      <p @click="detailEvent(news.sortDate)">{{news.title}}</p>
+      <p>{{news.content}}</p>
+      <p>{{news.date}}</p>
     </li>
+
     <b-pagination
         v-model="currentPage"
         :total-rows="rows"
@@ -16,13 +17,13 @@
 </template>
 
 <script>
-const url = '/resources/career';
+const url = '/resources/news';
 export default {
 
   data() {
     return{
       currentPage: 1,
-      careerData:[],
+      newsData:[],
       pageData:[],
     }
   },
@@ -32,17 +33,26 @@ export default {
   },
 
   methods:{
+    detailEvent(sortDate) {
+      this.$router.push({
+        path:'news/:id',
+        query:{
+          id: sortDate
+        }
+      })
+    },
 
     async changePage(currentPage) {
-      const newUrl = `/resources/career/page?page=${currentPage}`
+      const newUrl = `/resources/news/page?page=${currentPage}`
       await this.$axios.get(newUrl).then(res=>{
-        this.careerData = res.data
+        this.newsData = res.data
       })
     },
 
     async getData() {
       await this.$axios.get(url).then(res=>{
         this.pageData = res.data
+        console.log(this.pageData)
         let arrayLength
         if(this.pageData.length < 10){
           arrayLength = this.pageData.length
@@ -50,8 +60,9 @@ export default {
           arrayLength = 10
         }
         for (let i = 0; i < arrayLength; i++){
-          this.careerData[i] = this.pageData[i]
+          this.newsData[i] = this.pageData[i]
         }
+        console.log(this.newsData)
       })
     }
   },

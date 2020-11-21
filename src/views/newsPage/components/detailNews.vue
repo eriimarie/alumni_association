@@ -3,8 +3,6 @@
     title: {{event.title}}
     <br>
     content: {{event.content}}
-    <br>
-    date: {{event.date}}
   </div>
 </template>
 
@@ -22,7 +20,7 @@ export default {
 
   methods: {
     async getData() {
-      const newUrl = `/resources/events/detail/?id=${this.$route.query.id}`
+      const newUrl = `/resources/news/detail/?id=${this.$route.query.id}`
       await this.$axios.get(newUrl).then(res=>[
           this.event = res.data
       ])

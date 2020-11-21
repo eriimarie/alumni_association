@@ -69,7 +69,7 @@
         <b-form-group label-cols="4" label-cols-lg="2" label="answer2:">
           <b-form-input v-model="changeForm.answer2" type="text" required></b-form-input>
         </b-form-group>
-        <b-form-group label-cols="4" label-cols-lg="2" label="isAdmin:">
+        <b-form-group label-cols="4" label-cols-lg="2" label="isAdmin:" v-show="isShowAdmin">
           <b-form-select v-model="changeForm.isAdmin" :options="admin" type="text" required></b-form-select>
         </b-form-group>
         <b-button type="submit" >Submit change</b-button>
@@ -87,6 +87,7 @@ export default {
     return{
       isShow: false,
       showFindChange: false,
+      isShowAdmin: false,
       findUser: '',
 
       changeForm: {
@@ -108,7 +109,20 @@ export default {
         isAdmin: '',
       },
 
-      admin: ['0', '1']
+      admin: [
+        {value: "0", text: "Normal Account"},
+        {value: "1", text: "Professor Account"},
+        {value: "2", text: "Store Account"},
+        {value: "3", text: "Assistant Account"},
+        {value: "4", text: "Supervisor Account"}
+      ]
+    }
+  },
+
+  mounted() {
+    const admin = this.$cookies.get("isAdmin")
+    if (admin === "4"){
+      this.isShowAdmin = true
     }
   },
 

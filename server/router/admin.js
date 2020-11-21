@@ -1,5 +1,5 @@
 const express = require('express')
-const career = require('../model/career')
+const career = require('../model/news')
 const events = require('../model/events')
 const orders = require('../model/orders')
 const products = require('../model/products')

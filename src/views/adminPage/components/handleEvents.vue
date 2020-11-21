@@ -10,6 +10,9 @@
         <b-form-group label-cols="4" label-cols-lg="2" label="content:">
           <b-form-textarea v-model="addForm.content" required placeholder="Enter content" rows="5"></b-form-textarea>
         </b-form-group>
+        <b-form-group label-cols="4" label-cols-lg="2" label="category:">
+          <b-form-select v-model="addForm.category" :options="categoryOptions" type="text" required placeholder="Choose category"></b-form-select>
+        </b-form-group>
         <b-form-group label-cols="4" label-cols-lg="2" label="date:">
           <b-form-input v-model="addForm.date" type="date" required placeholder="Enter link"></b-form-input>
         </b-form-group>
@@ -39,6 +42,9 @@
         </b-form-group>
         <b-form-group label-cols="4" label-cols-lg="2" label="content:">
           <b-form-textarea v-model="changeForm.content" required placeholder="Enter content" rows="5"></b-form-textarea>
+        </b-form-group>
+        <b-form-group label-cols="4" label-cols-lg="2" label="category:">
+          <b-form-select v-model="changeForm.category" :options="categoryOptions" type="text" required placeholder="Choose category"></b-form-select>
         </b-form-group>
         <b-form-group label-cols="4" label-cols-lg="2" label="date:">
           <b-form-input v-model="changeForm.date" type="date" required placeholder="Enter link"></b-form-input>
@@ -88,7 +94,7 @@
 /**
  * 数据库：增删改查
  */
-const url = '/resources/events'
+const url = '/events'
 export default {
   data() {
     return{
@@ -102,6 +108,7 @@ export default {
       changeForm: {
         title: '',
         content: '',
+        category: '',
         date: '',
         oldSortDate: '',
         sortDate: '',
@@ -111,9 +118,16 @@ export default {
       addForm: {
         title: '',
         content: '',
+        category: '',
         date: '',
         sortDate: '',
       },
+
+      categoryOptions: [
+        {value: 'Annual Dinner Dance', text: 'Annual Dinner Dance'},
+        {value: 'FundRaisers', text: 'FundRaisers'},
+        {value: 'Family Fun Day', text: 'Family Fun Dat'},
+      ],
     }
   },
 
@@ -142,6 +156,7 @@ export default {
           this.changeForm.title = res.data.title
           this.changeForm.content = res.data.content
           this.changeForm.date = res.data.date
+          this.changeForm.category = res.data.category
           this.changeForm.sortDate = res.data.sortDate
           this.changeForm.oldSortDate = res.data.sortDate
           for (let i = 0; i < 11; i++){
@@ -154,9 +169,9 @@ export default {
     },
 
     async changePage(currentPage) {
-      const newUrl = `/resources/career/page?page=${currentPage}`
+      const newUrl = `/resources/events/page?page=${currentPage}`
       await this.$axios.get(newUrl).then(res=>{
-        this.careerData = res.data
+        this.eventsData = res.data
         for (let i = 0; i < 11; i++){
           this.$set(this.showChange, i, false)
         }

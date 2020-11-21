@@ -1,8 +1,12 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import resourcesPage from './views/resourcesPage/Resources'
-import careerChild from "./views/resourcesPage/components/careerChild"
-import eventsChild from "./views/resourcesPage/components/eventsChild"
+import newsPage from './views/newsPage/News'
+// import newsChild from "./views/newsPage/components/newsChild"
+import eventsPage from "./views/eventsPage/Events"
+import up_comingChild from "./views/eventsPage/components/up_comingChild"
+import dinner_danceChild from "./views/eventsPage/components/dinner_danceChild"
+import fundraiserChild from "./views/eventsPage/components/fundraiserChild"
+import familyChild from "./views/eventsPage/components/familyChild"
 import loginPage from './views/loginPage/Login'
 import profilePage from './views/profilePage/Profile'
 import registerPage from './views/registerPage/Register'
@@ -17,9 +21,9 @@ import shippingChild from "./views/profilePage/components/shippingChild"
 import ordersChild from "./views/profilePage/components/ordersChild"
 import passwordChild from "./views/profilePage/components/passwordChild"
 import portraitDescriptionChild from "./views/profilePage/components/portraitDescriptionChild"
-import detailEvents from "./views/resourcesPage/components/detailEvents"
+import detailNews from "./views/newsPage/components/detailNews"
 import adminPage from "./views/adminPage/Admin"
-import handleCareer from "./views/adminPage/components/handleCareer"
+import handleNews from "./views/adminPage/components/handleNews"
 import handleEvents from "./views/adminPage/components/handleEvents"
 import handleOrder from "./views/adminPage/components/handleOrder"
 import handleShopping from "./views/adminPage/components/handleShopping"
@@ -34,6 +38,10 @@ import Donate from "@/views/donatePage/Donate";
 import pay from "@/views/donatePage/components/pay";
 import thanksGiving from "@/views/donatePage/components/thanksGiving";
 import forgetPage from "./views/forgetPage/Forget"
+import defaultChild from "./views/adminPage/components/defaultChild"
+import history from "./views/historyPage/History"
+import qa from "./views/Q&APage/Q&APage"
+import contactPage from "./views/contactPage/contactPage"
 
 
 Vue.use(Router);
@@ -47,8 +55,8 @@ const router = new Router({
             component: adminPage,
             children: [
                 {
-                    path: "handleCareer",
-                    component: handleCareer,
+                    path: "handleNews",
+                    component: handleNews,
                 },
                 {
                     path: "handleEvent",
@@ -71,8 +79,50 @@ const router = new Router({
                     component: handleOrder,
                 },
                 {
+                    path: "default",
+                    component: defaultChild,
+                },
+                {
                     path: "",
-                    redirect: '/admin/handleCareer'
+                    redirect: '/admin/default'
+                },
+            ]
+        },
+        {
+            path: '/history',
+            component: history,
+        },
+        {
+            path: '/contact',
+            component: contactPage,
+        },
+        {
+            path: '/q&a',
+            component: qa,
+        },
+        {
+            path: '/events',
+            component: eventsPage,
+            children: [
+                {
+                    path: "upcoming",
+                    component: up_comingChild,
+                },
+                {
+                    path: "dance",
+                    component: dinner_danceChild,
+                },
+                {
+                    path: "fundraiser",
+                    component: fundraiserChild,
+                },
+                {
+                    path: "family",
+                    component: familyChild,
+                },
+                {
+                    path: "",
+                    redirect: '/events/upcoming'
                 },
             ]
         },
@@ -93,26 +143,12 @@ const router = new Router({
             component: thanksGiving,
         },
         {
-            path: '/resources',
-            component: resourcesPage,
-            children: [
-                {
-                    path: "career",
-                    component: careerChild,
-                },
-                {
-                    path: "events",
-                    component: eventsChild,
-                },
-                {
-                    path: "",
-                    redirect: '/resources/career',
-                }
-            ],
+            path: '/news',
+            component: newsPage,
         },
         {
-            path: '/resources/events/:id',
-            component: detailEvents
+            path: '/news/:id',
+            component: detailNews
         },
         {
             path: '/shopping',
@@ -224,7 +260,7 @@ router.beforeEach((to, from, next) => {
             next('/login')
         }
     } else if (to.path.includes('admin')) {
-        if (window.$cookies.get('isAdmin') === "1") {
+        if (window.$cookies.get('isAdmin') !== "0" && window.$cookies.get('isAdmin') !== null) {
             next()
         } else {
             window.alert('You don\'t have the right the access the page')

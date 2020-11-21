@@ -7,5 +7,5 @@ const careerSchema = new Schema({
     sortDate:{type: Number, require},
 })
 
-const careerInfo = model('career', careerSchema)
+const careerInfo = model('new', careerSchema)
 module.exports = careerInfo

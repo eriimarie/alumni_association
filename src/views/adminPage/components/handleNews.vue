@@ -2,13 +2,13 @@
   <div id="box">
     <div>
       <b-form @submit.prevent="submitAdd">
-        <h4>Add career</h4>
+        <h4>Add news</h4>
         <hr>
         <b-form-group label-cols="4" label-cols-lg="2" label="title:">
           <b-form-input v-model="addForm.title" type="text" required placeholder="Enter title"></b-form-input>
         </b-form-group>
         <b-form-group label-cols="4" label-cols-lg="2" label="link:">
-          <b-form-input v-model="addForm.content" type="text" required placeholder="Enter link"></b-form-input>
+          <b-form-textarea v-model="addForm.content" required placeholder="Enter content" rows="5"></b-form-textarea>
         </b-form-group>
         <b-button type="submit">Add Career Link</b-button>
       </b-form>
@@ -16,7 +16,7 @@
 
     <div>
       <b-form>
-        <h4>Find career</h4>
+        <h4>Find news</h4>
         <hr>
         <b-form-group label-cols="4" label-cols-lg="2" label="title:">
           <b-form-input id="title" v-model="findTitle" type="text" required placeholder="Enter title"></b-form-input>
@@ -42,7 +42,7 @@
     </div>
 
     <div>
-      <h4>Career list</h4>
+      <h4>news list</h4>
       <hr>
       <li v-for="(career, index) in careerData" :key="index">
         {{career.title}}
@@ -76,7 +76,7 @@
 /**
  * 数据库：增删改查
  */
-const url = '/resources/career'
+const url = '/resources/news'
 export default {
   data() {
     return{

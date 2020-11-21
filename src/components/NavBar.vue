@@ -10,7 +10,7 @@
           <b-nav-item href="/resources/career">Career</b-nav-item>
         </b-navbar-nav>
         <b-navbar-nav class="mx-auto">
-          <b-nav-item href="/resources/events">Events</b-nav-item>
+          <b-nav-item href="/events">Events</b-nav-item>
         </b-navbar-nav>
         <b-navbar-nav class="mx-auto">
           <b-nav-item href="/shopping">Market</b-nav-item>
