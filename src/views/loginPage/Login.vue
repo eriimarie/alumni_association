@@ -2,6 +2,7 @@
   <div>
     <topImg></topImg>
     <userInfo></userInfo>
+    <br><br><br>
   </div>
 </template>
 

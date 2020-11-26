@@ -5,8 +5,6 @@
         <b-row>
           <b-col sm="6">
             <div class="addBorder">
-
-              <!--          show img-->
               <div size="120" class="user" style="margin: 0 auto">
                 <b-img :src="this.userData.path" class="profile-img"></b-img>
               </div>
@@ -143,11 +141,14 @@ export default {
   width: 100%;
   border-radius: 50%;
 }
+h4{
+  color: #800001;
+}
   .addBorder{
     padding: 20px;
-    border: 1px solid #ccc;
+    border: 1px solid;
     border-radius: 40px;
-    box-shadow: 0 0 10px #eee;
+    box-shadow: 0 0 10px black;
     margin-top: 10px;
   }
 </style>

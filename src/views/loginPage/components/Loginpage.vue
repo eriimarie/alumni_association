@@ -1,5 +1,5 @@
 <template>
-  <div id="box">
+  <div id="box" style="background-color: white">
     <b-form @submit.prevent="onSubmit" v-if="show">
       <b-form-group label-cols="4"  id="input-group-1" label="Email:" label-for="input-1">
         <b-form-input id="input-1" v-model="form.email" type="email" required placeholder="Enter email here."
@@ -21,14 +21,8 @@
       <b-row align-h="around">
         <b-button type="submit" variant="primary" >Login</b-button>
         <a href="/register"><b-button variant="danger" >Sign up</b-button></a>
-
       </b-row>
-
-
-
-
     </b-form>
-
   </div>
 </template>
 
@@ -79,7 +73,7 @@ export default {
   border: 1px solid #ccc;
   border-radius: 10px;
   box-shadow: 0 0 10px #eee;
-  margin: 10px auto;
+  margin: 30px auto;
   display: table;
 }
 

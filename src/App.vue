@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div id="box">
     <navBar></navBar>
     <router-view></router-view>
     <bottomDiv></bottomDiv>
@@ -20,7 +20,7 @@ export default {
 </script>
 
 <style>
-*{
-
+#box{
+  background-color: #FFEAA7;
 }
 </style>

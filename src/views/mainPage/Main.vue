@@ -1,5 +1,8 @@
 <template>
   <div id="box">
+    <div id="border">
+      <span id="text">Welcome to the Maggoty Alumni US Nortern Region Website</span>
+    </div>
     <Carousel></Carousel>
     <Overview></Overview>
     <Contact></Contact>
@@ -28,5 +31,21 @@ export default {
 <style scoped>
   #box{
     margin-bottom: 30px;
+  }
+
+  #border{
+    width: 60%;
+    border: 1px solid;
+    text-align: center;
+    display: block;
+    margin: 10px auto;
+    background-color: white;
+    padding: 5px;
+    max-width: 920px;
+  }
+
+  #text{
+    color: #880001;
+    font-size: 16px;
   }
 </style>

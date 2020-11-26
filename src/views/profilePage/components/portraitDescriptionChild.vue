@@ -2,7 +2,9 @@
   <div>
     <b-container>
       <b-row>
-        <b-col sm="6">
+        <b-col sm="5" class="addBorder">
+          <h4>Change my avatar</h4>
+          <hr>
           <div size="120" class="user" style="margin: 0 auto">
             <b-img :src="this.userPhoto.path" class="profile-img"></b-img>
             <b-icon class="icon primary white--text" @click="$refs.FileInput.click()"><b>+</b></b-icon>
@@ -14,18 +16,18 @@
                 <VueCropper v-show="selectedFile" ref="cropper" :src="selectedFile" alt="Source Image"></VueCropper>
               </b-card-text>
               <b-card>
-                <b-btn class="primary" @click="saveImage() (dialog = false)">Crop</b-btn>
+                <b-btn class="primary button" @click="saveImage() (dialog = false)">Crop</b-btn>
               </b-card>
             </b-card>
           </b-container>
         </b-col>
 
-        <b-col sm="6">
+        <b-col sm="5" class="addBorder">
           <b-form @submit.prevent="changeDescription">
             <h4>Change my description</h4>
             <hr>
             <b-form-textarea v-model="userDescription.description" rows="5"></b-form-textarea>
-            <b-button type="submit">Change description</b-button>
+            <b-button class="button" type="submit">Change description</b-button>
           </b-form>
         </b-col>
       </b-row>
@@ -80,6 +82,8 @@ export default {
           }
         }).then(res=>{
           this.userPhoto.path = "http://localhost:3000/" + res.data
+          alert('success')
+          this.$router.go(0)
         })
       }, this.mime_type)
     },
@@ -117,12 +121,26 @@ export default {
 }
 </script>
 <style scoped>
+h4{
+  color: #800001;
+}
+.button{
+  background-color: #800001;
+  margin-top: 10px;
+}
 .user {
   width: 140px;
   height: 140px;
   border-radius: 100%;
   border: 3px solid #2e7d32;
   position: relative;
+}
+.addBorder{
+  padding: 20px;
+  border: 1px solid;
+  border-radius: 40px;
+  box-shadow: 0 0 10px black;
+  margin-right: 20px;
 }
 .profile-img {
   height: 100%;

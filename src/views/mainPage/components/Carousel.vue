@@ -9,15 +9,15 @@
         img-width="1024"
         img-height="480"
         style="text-shadow: 1px 1px 2px #333;"
-        @sliding-start="onSlideStart"
-        @sliding-end="onSlideEnd"
     >
-      <!-- Text slides with image -->
       <b-carousel-slide
-          caption="Welcome to MAA"
-          img-src="https://i.imgur.com/AnC4Lhs.jpg"
+          caption="Welcome"
+          img-src="https://i.imgur.com/7dPNwmy.jpg"
       ></b-carousel-slide>
-
+      <b-carousel-slide
+          caption="Welcome"
+          img-src="https://i.imgur.com/tCwiqms.jpg"
+      ></b-carousel-slide>
     </b-carousel>
 
   </div>

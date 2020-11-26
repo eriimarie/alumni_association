@@ -7,7 +7,7 @@
         <b-form-group label-cols="3" label="Password:">
           <b-form-input v-model="loginForm.password" type="password" required placeholder="Enter password"></b-form-input>
         </b-form-group>
-        <b-button type="submit">Login</b-button>
+        <b-button type="submit" class="button">Login</b-button>
       </b-form>
     </div>
 
@@ -35,7 +35,7 @@
             <span>Please enter the same password</span>
           </div>
         </b-form-group>
-        <b-button type="submit">Submit</b-button>
+        <b-button type="submit" class="button">Submit</b-button>
       </b-form>
     </div>
   </div>
@@ -127,10 +127,16 @@ export default {
 <style scoped>
 #box{
   padding: 20px;
-  border: 1px solid #ccc;
+  border: 1px solid;
   border-radius: 10px;
-  box-shadow: 0 0 10px #eee;
+  box-shadow: 0 0 10px black;
   margin: 10px auto;
+}
+.button{
+  background-color: #800001;
+}
+h5{
+  color: #800001;
 }
 .passwordRequirementsDefault {
   width: fit-content;
