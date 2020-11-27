@@ -1,19 +1,21 @@
 <template>
-  <div>
-    <li v-for="charity in charityData" v-bind:key="charity">
-      <p>{{charity.title}}</p>
-      <p>{{charity.content}}</p>
-      <p>{{charity.date}}</p>
-      <p>{{charity.category}}</p>
-    </li>
-
-    <b-pagination
-        v-model="currentPage"
-        :total-rows="rows"
-        :per-page="10"
-        @click.native="changePage(currentPage)"
-    ></b-pagination>
-
+  <div id="box">
+    <div id="category">Charity Events</div>
+    <div class="ul" v-for="(charity, index) in charityData" v-bind:key="index">
+      <p id="title"><b>{{charity.title}}</b></p>
+      <p id="date">{{charity.date}}</p>
+      <p id="content">{{charity.content}}</p>
+<!--      <p>{{charity.category}}</p>-->
+      <hr>
+    </div>
+    <div style="display: block; margin: 0 auto;">
+      <b-pagination
+          v-model="currentPage"
+          :total-rows="rows"
+          :per-page="10"
+          @click.native="changePage(currentPage)"
+      ></b-pagination>
+    </div>
   </div>
 </template>
 
@@ -66,5 +68,28 @@ export default {
 </script>
 
 <style scoped>
-
+p{
+  padding: 0;
+  margin: 0;
+}
+.ul{
+  list-style: none;
+  text-align: center;
+}
+hr{
+  height: 1px;
+  background-color: #800001;
+  color: #800001;
+}
+#title{
+  font-size: 20px;
+  color: #800001;
+}
+#category{
+  font-size: 25px;
+  color: white;
+  text-align: center;
+  background-color: #800001;
+  margin-bottom: 10px;
+}
 </style>

@@ -1,20 +1,21 @@
 <template>
-  <div>
-    {{charityData}}
-    <li v-for="leadership in leadershipData" v-bind:key="leadership">
-      <p>{{leadership.title}}</p>
-      <p>{{leadership.content}}</p>
-      <p>{{leadership.date}}</p>
-      <p>{{leadership.category}}</p>
-    </li>
-
-    <b-pagination
-        v-model="currentPage"
-        :total-rows="rows"
-        :per-page="10"
-        @click.native="changePage(currentPage)"
-    ></b-pagination>
-
+  <div id="box">
+    <div id="category"> Leadership Opportunity</div>
+    <div class="ul" v-for="(leadership, index) in leadershipData" v-bind:key="index">
+      <p id="title"><b>{{leadership.title}}</b></p>
+      <p id="date">{{leadership.date}}</p>
+      <p id="content">{{leadership.content}}</p>
+      <!--      <p>{{charity.category}}</p>-->
+      <hr>
+    </div>
+    <div>
+      <b-pagination
+          v-model="currentPage"
+          :total-rows="rows"
+          :per-page="10"
+          @click.native="changePage(currentPage)"
+      ></b-pagination>
+    </div>
   </div>
 </template>
 
@@ -67,5 +68,28 @@ export default {
 </script>
 
 <style scoped>
-
+p{
+  padding: 0;
+  margin: 0;
+}
+.ul{
+  list-style: none;
+  text-align: center;
+}
+hr{
+  height: 1px;
+  background-color: #800001;
+  color: #800001;
+}
+#title{
+  font-size: 20px;
+  color: #800001;
+}
+#category{
+  font-size: 25px;
+  color: white;
+  text-align: center;
+  background-color: #800001;
+  margin-bottom: 10px;
+}
 </style>
