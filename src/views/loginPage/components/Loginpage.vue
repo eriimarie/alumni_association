@@ -47,8 +47,8 @@ export default {
             this.$cookies.set('isAdmin', res.data.isAdmin, 60 * 60 * 24 * 30)
             this.$router.go(-1)
           } else {
-            this.$cookies.set('email', res.data.email)
-            this.$cookies.set('isAdmin', res.data.isAdmin)
+            this.$cookies.set('email', res.data.email, 60 * 60 * 24)
+            this.$cookies.set('isAdmin', res.data.isAdmin, 60 * 60 * 24)
             this.$router.go(-1)
           }
         } else {
