@@ -30,9 +30,8 @@
       </b-form>
       <div v-show="showChange[10]">
         <ul>
-          <hr>
-          <li>Title: {{changeForm.title}}</li>
-          <li>Category: {{changeForm.category}}</li>
+          <li>Title: <b>{{changeForm.title}}</b></li>
+          <li>Category: <b>{{changeForm.category}}</b></li>
           <button class="deleteButton" @click.prevent="deleteVolunteer(changeForm.sortDate)">delete</button>
           <button class="changeButton" @click="showFindChange = !showFindChange">change</button>
         </ul>
@@ -61,14 +60,12 @@
       <h4>Volunteer list</h4>
       <ul>
         <li v-for="(volunteer, index) in volunteerData" v-bind:key="index">
-          Title: {{volunteer.title}}
-          <br>
-          Category: {{volunteer.category}}
+          <p>Title: <b>{{volunteer.title}}</b></p>
+          <p>Category: <b>{{volunteer.category}}</b></p>
           <br>
           <button class="deleteButton" @click.prevent="deleteVolunteer(volunteer.sortDate)">delete</button>
           <button class="changeButton" @click.prevent="clickChangeVolunteer(index, volunteer.title, volunteer.content, volunteer.date, volunteer.category, volunteer.sortDate, volunteer.oldSortDate)">change</button>
           <b-form @submit.prevent="submitChange" v-show="showChange[index]">
-            {{volunteer}}
             <b-form-group label-cols="4" label-cols-lg="2" label="title:">
               <b-form-input v-model="changeForm.title" type="text" required placeholder="Enter title"></b-form-input>
             </b-form-group>
@@ -266,9 +263,6 @@ hr{
   height: 1px;
   background-color: #800001;
   color: #800001;
-}
-.margin{
-  margin-top: 20px;
 }
 .button{
   background-color: #800001;

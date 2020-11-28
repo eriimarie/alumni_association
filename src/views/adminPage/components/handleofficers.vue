@@ -50,14 +50,12 @@
 
       <div v-show="showChange[10]">
         <ul>
-          <li>{{findOfficer.name}}</li>
-          <li>{{findOfficer.phone}}</li>
-          <li>{{findOfficer.email}}</li>
+          <li>Name: <b>{{findOfficer.name}}</b></li>
+          <li>Phone: <b>{{findOfficer.phone}}</b></li>
+          <li>Email: <b>{{findOfficer.email}}</b></li>
+          <button class="deleteButton" @click.prevent="deleteOfficerFunction(findOfficer.name)">delete</button>
+          <button class="changeButton" @click="isShowResult = !isShowResult">change</button>
         </ul>
-
-        <button class="deleteButton" @click.prevent="deleteOfficerFunction(findOfficer.name)">delete</button>
-        <button class="changeButton" @click="isShowResult = !isShowResult">change</button>
-
         <b-form v-show="isShowResult" @submit.prevent="submitChange">
           <b-form-group label-cols="4" label-cols-lg="2" label="Officer Name:">
             <b-form-input v-model="findOfficer.name" type="text" required></b-form-input>
@@ -81,11 +79,9 @@
       <h4>Officers list</h4>
       <ul>
         <li v-for="(officer, index) in officerData" :key="index">
-          {{officer.name}}
-          <br>
-          {{officer.phone}}
-          <br>
-          {{officer.email}}
+          <p>Name: <b>{{officer.name}}</b></p>
+          <p>Phone: <b>{{officer.phone}}</b></p>
+          <p>Email: <b>{{officer.email}}</b></p>
           <button class="deleteButton" @click.prevent="deleteOfficerFunction(officer.name)">delete</button>
           <button class="changeButton" @click.prevent="clickChangeOfficer(index, officer.name, officer.phone, officer.email, officer.description)">change</button>
           <b-form @submit.prevent="submitChange" v-show="showChange[index]">
@@ -262,7 +258,7 @@ export default {
     },
 
     async getData() {
-      await this.$axios.get('/officers').then(res=>{
+      await this.$axios.get('/officer').then(res=>{
         this.pageData = res.data
         let arrayLength
         if(this.pageData.length < 10){
@@ -271,7 +267,7 @@ export default {
           arrayLength = 10
         }
         for (let i = 0; i < arrayLength; i++){
-          this.productData[i] = this.pageData[i]
+          this.officerData[i] = this.pageData[i]
         }
       })
     },

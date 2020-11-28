@@ -24,7 +24,7 @@
       </b-form>
       <div v-show="showChange[10]">
         <ul>
-          <li>{{changeForm.title}}</li>
+          <li>Title: <b>{{changeForm.title}}</b></li>
         </ul>
         <button class="deleteButton" @click.prevent="deleteCareer(changeForm.sortDate)">delete</button>
         <button class="changeButton" @click="showFindChange = !showFindChange">change</button>
@@ -46,7 +46,7 @@
       <h4>news list</h4>
       <ul>
         <li v-for="(career, index) in careerData" :key="index">
-          {{career.title}}
+          Title: <b>{{career.title}}</b>
           <br>
           <button class="deleteButton" @click.prevent="deleteCareer(career.sortDate)">delete</button>
           <button class="changeButton" @click.prevent="clickChangeCareer(index, career.title, career.content, career.sortDate, career.oldSortDate)">change</button>

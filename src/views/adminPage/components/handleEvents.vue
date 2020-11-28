@@ -30,8 +30,8 @@
       </b-form>
       <div v-show="showChange[10]">
         <ul>
-          <li>Title: {{changeForm.title}}</li>
-          <li>Category: {{changeForm.category}}</li>
+          <li>Title: <b>{{changeForm.title}}</b></li>
+          <li>Category: <b>{{changeForm.category}}</b></li>
         </ul>
         <button class="deleteButton" @click.prevent="deleteEvent(changeForm.sortDate)">delete</button>
         <button class="changeButton" @click="showFindChange = !showFindChange">change</button>
@@ -59,9 +59,9 @@
       <h4>Events list</h4>
       <ul>
         <li v-for="(events, index) in eventsData" v-bind:key="index">
-          Title: {{events.title}}
+          Title: <b>{{events.title}}</b>
           <br>
-          Category: {{events.category}}
+          Category: <b>{{events.category}}</b>
           <br>
           <button class="deleteButton" @click.prevent="deleteEvent(events.sortDate)">delete</button>
           <button class="changeButton" @click.prevent="clickChangeEvent(index, events.title, events.content, events.date,  events.sortDate, events.oldSortDate)">change</button>

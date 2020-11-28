@@ -57,13 +57,12 @@
 
       <div v-show="showChange[10]">
         <ul>
-          <li>Name: {{findProduct.name}}</li>
-          <li>Price: {{findProduct.price}}</li>
-          <li>Amount: {{findProduct.amount}}</li>
+          <li>Name: <b>{{findProduct.name}}</b></li>
+          <li>Price: <b>{{findProduct.price}}</b></li>
+          <li>Amount: <b>{{findProduct.amount}}</b></li>
+          <button class="deleteButton" @click.prevent="deleteProductFunction(findProduct.name)">delete</button>
+          <button class="changeButton" @click="isShowResult = !isShowResult">change</button>
         </ul>
-        <button class="deleteButton" @click.prevent="deleteProductFunction(findProduct.name)">delete</button>
-        <button class="changeButton" @click="isShowResult = !isShowResult">change</button>
-
         <b-form v-show="isShowResult" @submit.prevent="submitChange">
           <b-form-group label-cols="4" label-cols-lg="2" label="Product name:">
             <b-form-input v-model="findProduct.name" type="text" required></b-form-input>
@@ -91,12 +90,9 @@
         <h4>Products list</h4>
         <ul>
           <li v-for="(product, index) in productData" :key="index">
-            Name: {{product.name}}
-            <br>
-            Price: {{product.price}}
-            <br>
-            Amount: {{product.amount}}
-            <br>
+            <p>Name: <b>{{product.name}}</b></p>
+            <p>Price: <b>{{product.price}}</b></p>
+            <p>Amount: <b>{{product.amount}}</b></p>
             <button class="deleteButton" @click.prevent="deleteProductFunction(product.name)">delete</button>
             <button class="changeButton" @click.prevent="clickChangeProduct(index, product.name, product.price, product.size, product.amount, product.description, product.category)">change</button>
             <b-form @submit.prevent="submitChange" v-show="showChange[index]">
@@ -122,14 +118,13 @@
             </b-form>
             <hr>
           </li>
+          <b-pagination
+              v-model="currentPage"
+              :total-rows="rows"
+              :per-page="10"
+              @click.native="changePage(currentPage)"
+          ></b-pagination>
         </ul>
-
-        <b-pagination
-            v-model="currentPage"
-            :total-rows="rows"
-            :per-page="10"
-            @click.native="changePage(currentPage)"
-        ></b-pagination>
       </div>
     </div>
   </div>

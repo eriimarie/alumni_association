@@ -4,10 +4,8 @@
       <b-tabs card>
         <b-tab no-body title="Pending">
           <li v-for="(pending, index) in pendingData" v-bind:key="index">
-            Order Number: {{pending.orderNumber}}
-            <br>
-            Email: {{pending.email}}
-            <br>
+            <p>Order Number: <b>{{pending.orderNumber}}</b></p>
+            <p>Email: <b>{{pending.email}}</b></p>
             <button class="deleteButton" @click.prevent="trackingButton(index, pending.orderNumber)">add tracking</button>
             <button class="changeButton" @click.prevent="deleteOrder(pending.orderNumber)">cancel</button>
             <b-form @submit.prevent="addTracking()" v-show="showPendingChange[index]">
@@ -28,10 +26,8 @@
 
         <b-tab no-body title="Shipping">
           <li v-for="(shipping, index) in shippingData" v-bind:key="index">
-            Order Number: {{shipping.orderNumber}}
-            <br>
-            Email: {{shipping.email}}
-            <br>
+            <p>Order Number: <b>{{shipping.orderNumber}}</b></p>
+            <p>Email: <b>{{shipping.email}}</b></p>
             <button class="deleteButton" @click.prevent="delivered(shipping.orderNumber)">delivered</button>
             <hr>
           </li>
@@ -45,11 +41,10 @@
 
         <b-tab no-body title="Delivered">
           <li v-for="(delivered, index) in deliveredData" v-bind:key="index">
-            Order Number: {{delivered.orderNumber}}
-            <br>
-            Email: {{delivered.email}}
+            <p>Order Number: <b>{{delivered.orderNumber}}</b></p>
+            <p>Email: <b>{{delivered.email}}</b></p>
+            <hr>
           </li>
-
           <b-pagination
               v-model="currentDeliveredPage"
               :total-rows="this.deliveredPageData.length"
@@ -312,6 +307,10 @@ export default {
   border-radius: 10px;
   box-shadow: 0 0 10px black;
   margin: 20px auto;
+}
+p{
+  margin: 0;
+  padding: 0;
 }
 .deleteButton{
   background-color: #CEC094;
