@@ -46,6 +46,7 @@
             <hr>
           </li>
           <b-pagination
+              align="center"
               v-model="currentDeliveredPage"
               :total-rows="this.deliveredPageData.length"
               :per-page="10"

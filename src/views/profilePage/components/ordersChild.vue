@@ -2,17 +2,21 @@
   <div id="box" v-show="dataReady">
     <h3>Orders</h3>
     <hr>
-    <li v-for="(order, index) in orderData" v-bind:key="index">
-      Order Number: {{order.orderNumber}}<br>
-      Status: {{order.status}}<br>
-      <b-button @click.prevent="showDetail(index, order.orderNumber)" id="danger">show more details</b-button>
-      <ul v-for="(orders, index2) in orderDetail" v-bind:key="index2" v-show="showOrderChange[index]">
-        {{orders.product}} x {{orders.amount}}
-      </ul>
-      <hr>
-    </li>
+    <ul>
+      <li v-for="(order, index) in orderData" v-bind:key="index">
+        Order Number: {{order.orderNumber}}<br>
+        Status: {{order.status}}<br>
+        <b-button @click.prevent="showDetail(index, order.orderNumber)" id="danger">show more details</b-button>
+        <ul v-for="(orders, index2) in orderDetail" v-bind:key="index2" v-show="showOrderChange[index]">
+          {{orders.product}} x {{orders.amount}}
+        </ul>
+        <hr>
+      </li>
+    </ul>
+
 
     <b-pagination
+        align="center"
         class="align-middle"
         v-model="currentPage"
         :total-rows="this.orderPageData.length"

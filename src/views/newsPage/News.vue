@@ -1,12 +1,16 @@
 <template>
   <div>
-    <li v-for="news in newsData" v-bind:key="news">
-      <p @click="detailEvent(news.sortDate)">{{news.title}}</p>
-      <p>{{news.content}}</p>
-      <p>{{news.date}}</p>
-    </li>
+    <ul>
+      <li v-for="news in newsData" v-bind:key="news">
+        <p @click="detailEvent(news.sortDate)">{{news.title}}</p>
+        <p>{{news.content}}</p>
+        <p>{{news.date}}</p>
+      </li>
+    </ul>
+
 
     <b-pagination
+        align="center"
         v-model="currentPage"
         :total-rows="rows"
         :per-page="10"

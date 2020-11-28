@@ -1,11 +1,15 @@
 <template>
   <div id="box" v-show="isReady">
-    <li v-for="(event, index) in pageData" v-bind:key="index">
-      <p>{{event.title}}</p>
+    <b-img center :src="require(`../../../../src/assets/family.jpg`)" fluid></b-img>
+    <hr>
+    <div id="ul" v-for="(event, index) in pageData" v-bind:key="index">
+      <p id="title">{{event.title}}</p>
       <p>{{event.date}}</p>
       <P>{{event.content}}</P>
-    </li>
+      <hr>
+    </div>
     <b-pagination
+        align="center"
         v-model="currentPage"
         :total-rows="rows"
         :per-page="10"
@@ -70,5 +74,28 @@ export default {
 </script>
 
 <style scoped>
-
+#box{
+  padding: 20px;
+  border: 1px solid;
+  border-radius: 10px;
+  box-shadow: 0 0 10px black;
+  margin: 0 auto;
+}
+hr{
+  height: 1px;
+  background-color: #800001;
+  color: #800001;
+}
+p{
+  margin: 0;
+  padding: 0;
+}
+#title{
+  font-size: 20px;
+  color: #800001;
+}
+#ul{
+  text-align: center;
+  list-style: none;
+}
 </style>

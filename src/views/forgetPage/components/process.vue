@@ -1,11 +1,11 @@
 <template>
-  <div>
-    Forget Password?
+  <div id="box">
+    <p><b>Forget Password?</b></p>
     <b-form @submit.prevent="submitEmail" v-show="showEmail">
       <b-form-group label-cols="4" label-cols-lg="2" label="Email:">
         <b-form-input v-model="email" type="email" required placeholder="Enter email here"></b-form-input>
       </b-form-group>
-      <b-button type="submit">Next</b-button>
+      <b-button class="button" type="submit">Next</b-button>
     </b-form>
 
     <b-form @submit.prevent="submitAnswer" v-show="showQuestions">
@@ -15,7 +15,7 @@
       <b-form-group :label="savedQuestion2">
         <b-form-input v-model="inputAnswer2" type="text" required placeholder="Answer for question2"></b-form-input>
       </b-form-group>
-      <b-button type="submit">Next</b-button>
+      <b-button class="button" type="submit">Next</b-button>
     </b-form>
 
     <b-form @submit.prevent="submitPassword" v-show="showPassword">
@@ -39,7 +39,7 @@
           <span>Please enter the same password</span>
         </div>
       </b-form-group>
-      <b-button type="submit">Submit</b-button>
+      <b-button class="button" type="submit">Submit</b-button>
     </b-form>
   </div>
 </template>
@@ -140,6 +140,20 @@ export default {
 </script>
 
 <style scoped>
+#box{
+  padding: 20px;
+  border: 1px solid;
+  border-radius: 10px;
+  box-shadow: 0 0 10px black;
+  margin: 20px auto;
+}
+.button{
+  background-color: #800001;
+}
+p{
+  font-size: 20px;
+  color: #800001;
+}
 .passwordError {
   color: red;
 }

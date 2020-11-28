@@ -4,7 +4,7 @@
       <b-img center :src="require(`../../../../src/assets/adminLogo.png`)" style="max-width: 300px"></b-img>
     </div>
     <div id="text">
-      <p>Welcome to admin page</p>
+      <p>Welcome to the admin page</p>
       <p>Account type: {{accountType}}</p>
     </div>
 

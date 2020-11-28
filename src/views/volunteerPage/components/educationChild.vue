@@ -10,6 +10,7 @@
     </div>
     <div>
       <b-pagination
+          align="center"
           v-model="currentPage"
           :total-rows="rows"
           :per-page="10"

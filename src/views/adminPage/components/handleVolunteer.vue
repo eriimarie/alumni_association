@@ -36,6 +36,8 @@
           <button class="changeButton" @click="showFindChange = !showFindChange">change</button>
         </ul>
 
+
+
       </div>
       <b-form @submit.prevent="submitChange" v-show="showFindChange">
         <b-form-group label-cols="4" label-cols-lg="2" label="title:">
@@ -62,7 +64,6 @@
         <li v-for="(volunteer, index) in volunteerData" v-bind:key="index">
           <p>Title: <b>{{volunteer.title}}</b></p>
           <p>Category: <b>{{volunteer.category}}</b></p>
-          <br>
           <button class="deleteButton" @click.prevent="deleteVolunteer(volunteer.sortDate)">delete</button>
           <button class="changeButton" @click.prevent="clickChangeVolunteer(index, volunteer.title, volunteer.content, volunteer.date, volunteer.category, volunteer.sortDate, volunteer.oldSortDate)">change</button>
           <b-form @submit.prevent="submitChange" v-show="showChange[index]">
@@ -85,6 +86,7 @@
         </li>
       </ul>
       <b-pagination
+          align="center"
           v-model="currentPage"
           :total-rows="rows"
           :per-page="10"

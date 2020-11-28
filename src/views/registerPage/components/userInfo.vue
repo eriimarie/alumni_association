@@ -102,8 +102,9 @@
           <b-form-input id="answer1" v-model="form.answer2" type="text" placeholder="Enter the answer here"
                         required></b-form-input>
         </b-form-group>
+
       </div>
-      <b-button type="submit">Submit</b-button>
+      <b-button class="button" type="submit">Submit</b-button>
     </b-form>
 
   </div>
@@ -206,11 +207,17 @@ export default {
 <style scoped>
 #box{
   padding: 20px;
-  border: 1px solid #ccc;
+  border: 1px solid;
   border-radius: 10px;
-  box-shadow: 0 0 10px #eee;
-  margin: 10px auto;
+  box-shadow: 0 0 10px black;
+  margin: 20px auto;
   display: table;
+}
+h3, b {
+  color: #800001;
+}
+.button{
+  background-color: #800001;
 }
 .passwordRequirementsDefault {
   width: fit-content;

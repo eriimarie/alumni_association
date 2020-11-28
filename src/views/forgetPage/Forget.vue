@@ -16,6 +16,6 @@ export default {
 <style scoped>
   #box {
     max-width: 1200px;
-    margin: 0 auto;
+    margin: 20px auto;
   }
 </style>

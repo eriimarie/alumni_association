@@ -40,7 +40,6 @@ import forgetPage from "./views/forgetPage/Forget"
 import defaultChild from "./views/adminPage/components/defaultChild"
 import history from "./views/historyPage/History"
 import qa from "./views/Q&APage/Q&APage"
-import contactPage from "./views/contactPage/contactPage"
 import officers from "@/views/officerPage/components/officers";
 import officersDetail from "@/views/officerPage/components/officersDetail";
 import handleOfficers from "@/views/adminPage/components/handleofficers";
@@ -104,10 +103,6 @@ const router = new Router({
         {
             path: '/officer/:id',
             component: officersDetail,
-        },
-        {
-            path: '/contact',
-            component: contactPage,
         },
         {
             path: '/q&a',

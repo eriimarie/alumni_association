@@ -119,6 +119,7 @@
             <hr>
           </li>
           <b-pagination
+              align="center"
               v-model="currentPage"
               :total-rows="rows"
               :per-page="10"
@@ -369,9 +370,6 @@ hr{
   height: 1px;
   background-color: #800001;
   color: #800001;
-}
-.margin{
-  margin-top: 20px;
 }
 .button{
   background-color: #800001;
