@@ -3,7 +3,6 @@
     <div>
       <b-form @submit.prevent="submitVolunteer">
         <h4>Add volunteer opportunity</h4>
-        <hr>
         <b-form-group label-cols="4" label-cols-lg="2" label="title:">
           <b-form-input v-model="addForm.title" type="text" required placeholder="Enter title"></b-form-input>
         </b-form-group>
@@ -16,26 +15,28 @@
         <b-form-group label-cols="4" label-cols-lg="2" label="category:">
           <b-form-select v-model="addForm.category" :options="categoryOptions" type="text" required placeholder="Enter link"></b-form-select>
         </b-form-group>
-        <b-button type="submit">Add Volunteer Opportunity</b-button>
+        <b-button class="button" type="submit">Add Volunteer Opportunity</b-button>
       </b-form>
+      <hr>
     </div>
 
     <div>
       <b-form>
         <h4>Find volunteer opportunity</h4>
-        <hr>
         <b-form-group label-cols="4" label-cols-lg="2" label="title:">
           <b-form-input v-model="findTitle" type="text" required placeholder="Enter title"></b-form-input>
         </b-form-group>
-        <b-button @click.prevent="submitFind(findTitle)">Find title</b-button>
+        <b-button class="button" @click.prevent="submitFind(findTitle)">Find title</b-button>
       </b-form>
       <div v-show="showChange[10]">
-        <li>{{changeForm.title}}</li>
-        <li style="white-space: pre-line">{{changeForm.content}}</li>
-        <li>{{changeForm.date}}</li>
-        <li>{{changeForm.category}}</li>
-        <button @click.prevent="deleteVolunteer(changeForm.sortDate)">delete</button>
-        <button @click="showFindChange = !showFindChange">change</button>
+        <ul>
+          <hr>
+          <li>Title: {{changeForm.title}}</li>
+          <li>Category: {{changeForm.category}}</li>
+          <button class="deleteButton" @click.prevent="deleteVolunteer(changeForm.sortDate)">delete</button>
+          <button class="changeButton" @click="showFindChange = !showFindChange">change</button>
+        </ul>
+
       </div>
       <b-form @submit.prevent="submitChange" v-show="showFindChange">
         <b-form-group label-cols="4" label-cols-lg="2" label="title:">
@@ -51,42 +52,41 @@
           <b-form-select v-model="changeForm.category" :options="categoryOptions" type="text" required placeholder="Enter link"></b-form-select>
         </b-form-group>
         <b-form-checkbox v-model="changeForm.checkbox" value="checked" unchecked-value="unchecked">Move to the front</b-form-checkbox>
-        <b-button type="submit" >Submit change</b-button>
+        <b-button class="button" type="submit" >Submit change</b-button>
       </b-form>
     </div>
+    <hr>
 
     <div>
       <h4>Volunteer list</h4>
-      <hr>
-      <li v-for="(volunteer, index) in volunteerData" v-bind:key="index">
-        {{volunteer.title}}
-        <p style="white-space: pre-line">{{volunteer.content}}</p>
-
-        <br>
-        {{volunteer.date}}
-        <br>
-        {{volunteer.category}}
-        <button @click.prevent="deleteVolunteer(volunteer.sortDate)">delete</button>
-        <button @click.prevent="clickChangeVolunteer(index, volunteer.title, volunteer.content, volunteer.date, volunteer.category, volunteer.sortDate, volunteer.oldSortDate)">change</button>
-        <b-form @submit.prevent="submitChange" v-show="showChange[index]">
-          {{volunteer}}
-          <b-form-group label-cols="4" label-cols-lg="2" label="title:">
-            <b-form-input v-model="changeForm.title" type="text" required placeholder="Enter title"></b-form-input>
-          </b-form-group>
-          <b-form-group label-cols="4" label-cols-lg="2" label="content:">
-            <b-form-textarea v-model="changeForm.content" required placeholder="Enter content" rows="5"></b-form-textarea>
-          </b-form-group>
-          <b-form-group label-cols="4" label-cols-lg="2" label="date:">
-            <b-form-input v-model="changeForm.date" type="date" required placeholder="Enter link"></b-form-input>
-          </b-form-group>
-          <b-form-group label-cols="4" label-cols-lg="2" label="category:">
-            <b-form-select v-model="changeForm.category" :options="categoryOptions" type="text" required placeholder="Enter link"></b-form-select>
-          </b-form-group>
-          <b-form-checkbox v-model="changeForm.checkbox" value="checked" unchecked-value="unchecked">Move to the front</b-form-checkbox>
-          <b-button type="submit" >Submit change</b-button>
-        </b-form>
-        <hr>
-      </li>
+      <ul>
+        <li v-for="(volunteer, index) in volunteerData" v-bind:key="index">
+          Title: {{volunteer.title}}
+          <br>
+          Category: {{volunteer.category}}
+          <br>
+          <button class="deleteButton" @click.prevent="deleteVolunteer(volunteer.sortDate)">delete</button>
+          <button class="changeButton" @click.prevent="clickChangeVolunteer(index, volunteer.title, volunteer.content, volunteer.date, volunteer.category, volunteer.sortDate, volunteer.oldSortDate)">change</button>
+          <b-form @submit.prevent="submitChange" v-show="showChange[index]">
+            {{volunteer}}
+            <b-form-group label-cols="4" label-cols-lg="2" label="title:">
+              <b-form-input v-model="changeForm.title" type="text" required placeholder="Enter title"></b-form-input>
+            </b-form-group>
+            <b-form-group label-cols="4" label-cols-lg="2" label="content:">
+              <b-form-textarea v-model="changeForm.content" required placeholder="Enter content" rows="5"></b-form-textarea>
+            </b-form-group>
+            <b-form-group label-cols="4" label-cols-lg="2" label="date:">
+              <b-form-input v-model="changeForm.date" type="date" required placeholder="Enter link"></b-form-input>
+            </b-form-group>
+            <b-form-group label-cols="4" label-cols-lg="2" label="category:">
+              <b-form-select v-model="changeForm.category" :options="categoryOptions" type="text" required placeholder="Enter link"></b-form-select>
+            </b-form-group>
+            <b-form-checkbox v-model="changeForm.checkbox" value="checked" unchecked-value="unchecked">Move to the front</b-form-checkbox>
+            <b-button class="button" type="submit" >Submit change</b-button>
+          </b-form>
+          <hr>
+        </li>
+      </ul>
       <b-pagination
           v-model="currentPage"
           :total-rows="rows"
@@ -252,5 +252,37 @@ export default {
 </script>
 
 <style scoped>
-
+#box{
+  padding: 20px;
+  border: 1px solid;
+  border-radius: 10px;
+  box-shadow: 0 0 10px black;
+  margin: 20px auto;
+}
+h4{
+  color: #800001;
+}
+hr{
+  height: 1px;
+  background-color: #800001;
+  color: #800001;
+}
+.margin{
+  margin-top: 20px;
+}
+.button{
+  background-color: #800001;
+}
+.deleteButton{
+  background-color: #CEC094;
+  color: #800001;
+}
+.changeButton{
+  background-color: #CEC094;
+  color: #800001;
+  margin-left: 10px;
+}
+ul{
+  list-style: none;
+}
 </style>

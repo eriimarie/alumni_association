@@ -4,7 +4,7 @@
       <b-row>
         <b-col sm="3">
           <div id="left">
-            <b-img center :src="require(`../../assets/logo.webp`)" style="max-width: 70px"></b-img>
+            <b-img center :src="require(`../../assets/schoolLogo.png`)" style="max-width: 70px"></b-img>
             <p id="menu">Menu</p>
             <router-link :id="isUser? 'changeColor': ''" to="/profile/user" tag="li">User</router-link>
             <router-link :id="isShipping? 'changeColor': ''" to="/profile/shipping" tag="li">Edit shipping</router-link>
@@ -80,7 +80,7 @@ export default {
 <style scoped>
   #box{
     max-width: 1200px;
-    margin: 20px auto;
+    margin: 0px auto;
   }
   #menu{
     background-color: #800001;
@@ -100,5 +100,6 @@ export default {
     border-radius: 20px;
     box-shadow: 0 0 10px black;
     text-align: center;
+    margin-top: 20px;
   }
 </style>

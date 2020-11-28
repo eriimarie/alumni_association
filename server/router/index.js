@@ -8,6 +8,7 @@ const adminRouter = require('./admin')
 const shoppingRouter = require('./shopping')
 const cartRouter = require('./cart')
 const forgetRouter = require('./forget')
+const officerRouter = require('./officer')
 
 module.exports = app => {
     app.use('/register', registerRouter)
@@ -20,4 +21,5 @@ module.exports = app => {
     app.use('/shopping',shoppingRouter)
     app.use('/cart',cartRouter)
     app.use('/forget', forgetRouter)
+    app.use('/officer', officerRouter)
 }

@@ -3,8 +3,6 @@
     <div>
       <b-form @submit.prevent="addOfficerFunction">
         <h4>Add officer</h4>
-        <span>Please make sure the officer is not listed</span>
-        <hr>
         <div v-show="isShowAdd">
           <b-form-group label-cols="4" label-cols-lg="2" label="Officer Name:">
             <b-form-input v-model="addOfficer.name" type="text" v-on:blur="checkName" required placeholder="Enter officer name"></b-form-input>
@@ -18,9 +16,10 @@
           <b-form-group label-cols="4" label-cols-lg="2" label="Officer Description:">
             <b-form-textarea rows="3" v-model="addOfficer.description" type="text" required placeholder="Enter officer description"></b-form-textarea>
           </b-form-group>
-          <b-button type="submit">Next</b-button>
+          <b-button class="button" type="submit">Next</b-button>
         </div>
       </b-form>
+      <hr>
     </div>
 
     <div v-show="isShowCrop">
@@ -34,28 +33,30 @@
             <VueCropper v-show="selectedFile" ref="cropper" :src="selectedFile" alt="Source Image"></VueCropper>
           </b-card-text>
           <b-card>
-            <b-btn class="primary" @click="savePhoto() (dialog = false)">Crop</b-btn>
+            <b-btn class="button primary" @click="savePhoto() (dialog = false)">Crop</b-btn>
           </b-card>
         </b-card>
       </b-container>
     </div>
 
-    <div>
+    <div class="margin">
       <h4>Change officer</h4>
-      <hr>
       <b-form @submit.prevent="findOfficerFunction">
         <b-form-group label-cols="4" label-cols-lg="2" label="Officer name:">
           <b-form-input v-model="findOfficer.name" type="text" required placeholder="Enter officer name"></b-form-input>
         </b-form-group>
-        <b-button type="submit">Search</b-button>
+        <b-button class="button" type="submit">Search</b-button>
       </b-form>
 
       <div v-show="showChange[10]">
-        <li>{{findOfficer.name}}</li>
-        <li>{{findOfficer.phone}}</li>
-        <li>{{findOfficer.email}}</li>
-        <b-button @click.prevent="deleteOfficerFunction(findOfficer.name)">delete</b-button>
-        <b-button @click="isShowResult = !isShowResult">change</b-button>
+        <ul>
+          <li>{{findOfficer.name}}</li>
+          <li>{{findOfficer.phone}}</li>
+          <li>{{findOfficer.email}}</li>
+        </ul>
+
+        <button class="deleteButton" @click.prevent="deleteOfficerFunction(findOfficer.name)">delete</button>
+        <button class="changeButton" @click="isShowResult = !isShowResult">change</button>
 
         <b-form v-show="isShowResult" @submit.prevent="submitChange">
           <b-form-group label-cols="4" label-cols-lg="2" label="Officer Name:">
@@ -70,21 +71,23 @@
           <b-form-group label-cols="4" label-cols-lg="2" label="Officer Description:">
             <b-form-textarea rows="3" v-model="findOfficer.description" type="text" required></b-form-textarea>
           </b-form-group>
-          <b-button type="submit">submit</b-button>
+          <b-button class="button" type="submit">submit</b-button>
         </b-form>
       </div>
+      <hr>
+    </div>
 
-      <div>
-        <h4>Officers list</h4>
-        <hr>
+    <div class="margin">
+      <h4>Officers list</h4>
+      <ul>
         <li v-for="(officer, index) in officerData" :key="index">
           {{officer.name}}
           <br>
           {{officer.phone}}
           <br>
           {{officer.email}}
-          <button @click.prevent="deleteOfficerFunction(officer.name)">delete</button>
-          <button @click.prevent="clickChangeOfficer(index, officer.name, officer.phone, officer.email, officer.description)">change</button>
+          <button class="deleteButton" @click.prevent="deleteOfficerFunction(officer.name)">delete</button>
+          <button class="changeButton" @click.prevent="clickChangeOfficer(index, officer.name, officer.phone, officer.email, officer.description)">change</button>
           <b-form @submit.prevent="submitChange" v-show="showChange[index]">
             <b-form-group label-cols="4" label-cols-lg="2" label="Officer Name:">
               <b-form-input v-model="findOfficer.name" type="text" required></b-form-input>
@@ -98,17 +101,17 @@
             <b-form-group label-cols="4" label-cols-lg="2" label="Officer Description:">
               <b-form-textarea rows="3" v-model="findOfficer.description" type="text" required></b-form-textarea>
             </b-form-group>
-            <b-button type="submit">submit</b-button>
+            <b-button class="button" type="submit">submit</b-button>
           </b-form>
           <hr>
         </li>
-        <b-pagination
-            v-model="currentPage"
-            :total-rows="rows"
-            :per-page="10"
-            @click.native="changePage(currentPage)"
-        ></b-pagination>
-      </div>
+      </ul>
+      <b-pagination
+          v-model="currentPage"
+          :total-rows="rows"
+          :per-page="10"
+          @click.native="changePage(currentPage)"
+      ></b-pagination>
     </div>
   </div>
 </template>
@@ -178,7 +181,8 @@ export default {
 
     async addOfficerFunction() {
       await this.$axios.post('/admin/addOfficer', this.addOfficer).then(res=>{
-        alert(res.data)
+        console.log(res.data)
+        alert("Please add picture")
         this.isShowAdd = false
         this.isShowCrop = true
       })
@@ -318,10 +322,45 @@ export default {
 </script>
 
 <style scoped>
-.profile-img {
-  height: 100%;
-  width: 100%;
-  border-radius: 50%;
+#box{
+  padding: 20px;
+  border: 1px solid;
+  border-radius: 10px;
+  box-shadow: 0 0 10px black;
+  margin: 20px auto;
+}
+.icon{
+  background-color: #800001;
+  color: white;
+  font-size: 20px;
+  border: 1px solid #800001;
+  border-radius: 5px;
+}
+h4{
+  color: #800001;
+}
+hr{
+  height: 1px;
+  background-color: #800001;
+  color: #800001;
+}
+.margin{
+  margin-top: 20px;
+}
+.button{
+  background-color: #800001;
+}
+.deleteButton{
+  background-color: #CEC094;
+  color: #800001;
+}
+.changeButton{
+  background-color: #CEC094;
+  color: #800001;
+  margin-left: 10px;
+}
+ul{
+  list-style: none;
 }
 
 </style>

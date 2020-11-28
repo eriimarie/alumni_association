@@ -129,6 +129,9 @@ export default {
 </script>
 
 <style scoped>
+#box{
+  margin: 10px auto;
+}
 .user {
   width: 140px;
   height: 140px;

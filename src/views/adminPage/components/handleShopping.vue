@@ -3,8 +3,6 @@
     <div>
       <b-form @submit.prevent="addProductFunction">
         <h4>Add product</h4>
-        <span>Please make sure the product is not listed</span>
-        <hr>
         <div v-show="isShowAdd">
           <b-form-group label-cols="4" label-cols-lg="2" label="Product name:">
             <b-form-input v-model="addProduct.name" type="text" v-on:blur="checkName" required placeholder="Enter product name"></b-form-input>
@@ -24,9 +22,10 @@
           <b-form-group label-cols="4" label-cols-lg="2" label="Product category:">
             <b-form-input v-model="addProduct.category" type="text" required placeholder="Enter product description"></b-form-input>
           </b-form-group>
-          <b-button type="submit">Next</b-button>
+          <b-button class="button" type="submit">Next</b-button>
         </div>
       </b-form>
+      <hr>
     </div>
 
     <div v-show="isShowCrop">
@@ -40,28 +39,30 @@
             <VueCropper v-show="selectedFile" ref="cropper" :src="selectedFile" alt="Source Image"></VueCropper>
           </b-card-text>
           <b-card>
-            <b-btn class="primary" @click="savePhoto() (dialog = false)">Crop</b-btn>
+            <b-btn class="primary button" @click="savePhoto() (dialog = false)">Crop</b-btn>
           </b-card>
         </b-card>
       </b-container>
+      <hr>
     </div>
 
     <div>
       <h4>Change product</h4>
-      <hr>
       <b-form @submit.prevent="findProductFunction">
         <b-form-group label-cols="4" label-cols-lg="2" label="Product name:">
           <b-form-input v-model="findProduct.name" type="text" required placeholder="Enter product name"></b-form-input>
         </b-form-group>
-        <b-button type="submit">Search</b-button>
+        <b-button class="button" type="submit">Search</b-button>
       </b-form>
 
       <div v-show="showChange[10]">
-        <li>{{findProduct.name}}</li>
-        <li>{{findProduct.price}}</li>
-        <li>{{findProduct.amount}}</li>
-        <b-button @click.prevent="deleteProductFunction(findProduct.name)">delete</b-button>
-        <b-button @click="isShowResult = !isShowResult">change</b-button>
+        <ul>
+          <li>Name: {{findProduct.name}}</li>
+          <li>Price: {{findProduct.price}}</li>
+          <li>Amount: {{findProduct.amount}}</li>
+        </ul>
+        <button class="deleteButton" @click.prevent="deleteProductFunction(findProduct.name)">delete</button>
+        <button class="changeButton" @click="isShowResult = !isShowResult">change</button>
 
         <b-form v-show="isShowResult" @submit.prevent="submitChange">
           <b-form-group label-cols="4" label-cols-lg="2" label="Product name:">
@@ -82,44 +83,47 @@
           <b-form-group label-cols="4" label-cols-lg="2" label="Product category:">
             <b-form-input v-model="findProduct.category" type="text" required></b-form-input>
           </b-form-group>
-          <b-button type="submit">submit</b-button>
+          <b-button class="button" type="submit">submit</b-button>
         </b-form>
       </div>
-
+      <hr>
       <div>
         <h4>Products list</h4>
-        <hr>
-        <li v-for="(product, index) in productData" :key="index">
-          {{product.name}}
-          <br>
-          {{product.price}}
-          <br>
-          {{product.amount}}
-          <button @click.prevent="deleteProductFunction(product.name)">delete</button>
-          <button @click.prevent="clickChangeProduct(index, product.name, product.price, product.size, product.amount, product.description, product.category)">change</button>
-          <b-form @submit.prevent="submitChange" v-show="showChange[index]">
-            <b-form-group label-cols="4" label-cols-lg="2" label="Product name:">
-              <b-form-input v-model="findProduct.name" type="text" required></b-form-input>
-            </b-form-group>
-            <b-form-group label-cols="4" label-cols-lg="2" label="Product price:">
-              <b-form-input v-model="findProduct.price" type="number" required></b-form-input>
-            </b-form-group>
-            <b-form-group label-cols="4" label-cols-lg="2" label="Product size:">
-              <b-form-input v-model="findProduct.size" type="number" required></b-form-input>
-            </b-form-group>
-            <b-form-group label-cols="4" label-cols-lg="2" label="Product amount:">
-              <b-form-input v-model="findProduct.amount" type="number" required></b-form-input>
-            </b-form-group>
-            <b-form-group label-cols="4" label-cols-lg="2" label="Product description:">
-              <b-form-textarea rows="3" v-model="findProduct.description" type="text" required></b-form-textarea>
-            </b-form-group>
-            <b-form-group label-cols="4" label-cols-lg="2" label="Product category:">
-              <b-form-input v-model="findProduct.category" type="text" required></b-form-input>
-            </b-form-group>
-            <b-button type="submit">submit</b-button>
-          </b-form>
-          <hr>
-        </li>
+        <ul>
+          <li v-for="(product, index) in productData" :key="index">
+            Name: {{product.name}}
+            <br>
+            Price: {{product.price}}
+            <br>
+            Amount: {{product.amount}}
+            <br>
+            <button class="deleteButton" @click.prevent="deleteProductFunction(product.name)">delete</button>
+            <button class="changeButton" @click.prevent="clickChangeProduct(index, product.name, product.price, product.size, product.amount, product.description, product.category)">change</button>
+            <b-form @submit.prevent="submitChange" v-show="showChange[index]">
+              <b-form-group label-cols="4" label-cols-lg="2" label="Product name:">
+                <b-form-input v-model="findProduct.name" type="text" required></b-form-input>
+              </b-form-group>
+              <b-form-group label-cols="4" label-cols-lg="2" label="Product price:">
+                <b-form-input v-model="findProduct.price" type="number" required></b-form-input>
+              </b-form-group>
+              <b-form-group label-cols="4" label-cols-lg="2" label="Product size:">
+                <b-form-input v-model="findProduct.size" type="number" required></b-form-input>
+              </b-form-group>
+              <b-form-group label-cols="4" label-cols-lg="2" label="Product amount:">
+                <b-form-input v-model="findProduct.amount" type="number" required></b-form-input>
+              </b-form-group>
+              <b-form-group label-cols="4" label-cols-lg="2" label="Product description:">
+                <b-form-textarea rows="3" v-model="findProduct.description" type="text" required></b-form-textarea>
+              </b-form-group>
+              <b-form-group label-cols="4" label-cols-lg="2" label="Product category:">
+                <b-form-input v-model="findProduct.category" type="text" required></b-form-input>
+              </b-form-group>
+              <b-button class="button" type="submit">submit</b-button>
+            </b-form>
+            <hr>
+          </li>
+        </ul>
+
         <b-pagination
             v-model="currentPage"
             :total-rows="rows"
@@ -202,7 +206,8 @@ export default {
 
     async addProductFunction() {
       await this.$axios.post('/admin/addProduct', this.addProduct).then(res=>{
-        alert(res.data)
+        console.log(res.data)
+        alert("Please add picture")
         this.isShowAdd = false
         this.isShowCrop = true
       })
@@ -348,10 +353,45 @@ export default {
 </script>
 
 <style scoped>
-.profile-img {
-  height: 100%;
-  width: 100%;
-  border-radius: 50%;
+#box{
+  padding: 20px;
+  border: 1px solid;
+  border-radius: 10px;
+  box-shadow: 0 0 10px black;
+  margin: 20px auto;
+}
+.icon{
+  background-color: #800001;
+  color: white;
+  font-size: 20px;
+  border: 1px solid #800001;
+  border-radius: 5px;
+}
+h4{
+  color: #800001;
+}
+hr{
+  height: 1px;
+  background-color: #800001;
+  color: #800001;
+}
+.margin{
+  margin-top: 20px;
+}
+.button{
+  background-color: #800001;
+}
+.deleteButton{
+  background-color: #CEC094;
+  color: #800001;
+}
+.changeButton{
+  background-color: #CEC094;
+  color: #800001;
+  margin-left: 10px;
+}
+ul{
+  list-style: none;
 }
 
 </style>

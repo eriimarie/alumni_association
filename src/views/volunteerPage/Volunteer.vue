@@ -4,7 +4,7 @@
       <b-row>
         <b-col sm="3">
           <div id="left">
-            <b-img center :src="require(`../../assets/logo.webp`)" style="max-width: 70px"></b-img>
+            <b-img center :src="require(`../../assets/schoolLogo.png`)" style="max-width: 70px"></b-img>
             <p id="menu">Volunteer</p>
             <router-link :id="isLeadership? 'changeColor': ''" to="/volunteer/leadership" tag="li">Leadership opportunity</router-link>
             <router-link :id="isCharity? 'changeColor': ''" to="/volunteer/charity" tag="li">Charity events</router-link>
@@ -22,10 +22,8 @@
 </template>
 
 <script>
-
 export default {
   components: {
-
   },
   data() {
     return{

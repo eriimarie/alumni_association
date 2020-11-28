@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div id="box">
     <b-container>
       <b-row>
         <b-col sm="5" class="addBorder">
@@ -121,6 +121,9 @@ export default {
 }
 </script>
 <style scoped>
+#box{
+  margin: 20px auto;
+}
 h4{
   color: #800001;
 }

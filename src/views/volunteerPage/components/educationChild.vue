@@ -68,6 +68,13 @@ export default {
 </script>
 
 <style scoped>
+#box{
+  padding: 20px;
+  border: 1px solid;
+  border-radius: 10px;
+  box-shadow: 0 0 10px black;
+  margin: 0 auto;
+}
 p{
   padding: 0;
   margin: 0;

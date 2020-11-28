@@ -7,21 +7,24 @@
         <b-form-group label-cols="4" label-cols-lg="2" label="email:">
           <b-form-input v-model="findUser" type="email" required></b-form-input>
         </b-form-group>
-        <b-button type="submit">Find user</b-button>
+        <b-button class="button" type="submit">Find user</b-button>
       </b-form>
       <div v-show="isShow">
-        <li>{{changeForm.firstName}}</li>
-        <li>{{changeForm.lastName}}</li>
-        <li>{{changeForm.universityId}}</li>
-        <li>{{changeForm.email}}</li>
-        <li>{{changeForm.password}}</li>
-        <li>{{changeForm.question1}}</li>
-        <li>{{changeForm.answer1}}</li>
-        <li>{{changeForm.question2}}</li>
-        <li>{{changeForm.answer2}}</li>
-        <li>{{changeForm.isAdmin}}</li>
-        <button @click.prevent="deleteUser(changeForm.email)">delete</button>
-        <button @click="showFindChange = !showFindChange">change</button>
+        <ul>
+          <li>First Name: <b>{{changeForm.firstName}}</b></li>
+          <li>Last Name: <b>{{changeForm.lastName}}</b></li>
+          <li>Id: <b>{{changeForm.universityId}}</b></li>
+          <li>Email: <b>{{changeForm.email}}</b></li>
+          <li>Password: <b>{{changeForm.password}}</b></li>
+          <li>Q1: <b>{{changeForm.question1}}</b></li>
+          <li>A1: <b>{{changeForm.answer1}}</b></li>
+          <li>Q2: <b>{{changeForm.question2}}</b></li>
+          <li>A2: <b>{{changeForm.answer2}}</b></li>
+          <li>Admin: <b>{{changeForm.isAdmin}}</b></li>
+        </ul>
+
+        <button class="deleteButton" @click.prevent="deleteUser(changeForm.email)">delete</button>
+        <button class="changeButton" @click="showFindChange = !showFindChange">change</button>
       </div>
       <b-form @submit.prevent="submitChange" v-show="showFindChange">
         <b-form-group label-cols="4" label-cols-lg="2" label="firstName:">
@@ -72,7 +75,7 @@
         <b-form-group label-cols="4" label-cols-lg="2" label="isAdmin:" v-show="isShowAdmin">
           <b-form-select v-model="changeForm.isAdmin" :options="admin" type="text" required></b-form-select>
         </b-form-group>
-        <b-button type="submit" >Submit change</b-button>
+        <b-button class="button" type="submit" >Submit change</b-button>
       </b-form>
     </div>
   </div>
@@ -176,5 +179,34 @@ export default {
 </script>
 
 <style scoped>
-
+#box{
+  padding: 20px;
+  border: 1px solid;
+  border-radius: 10px;
+  box-shadow: 0 0 10px black;
+  margin: 20px auto;
+}
+h4{
+  color: #800001;
+}
+hr{
+  height: 1px;
+  background-color: #800001;
+  color: #800001;
+}
+.button{
+  background-color: #800001;
+}
+.deleteButton{
+  background-color: #CEC094;
+  color: #800001;
+}
+.changeButton{
+  background-color: #CEC094;
+  color: #800001;
+  margin-left: 10px;
+}
+ul{
+  list-style: none;
+}
 </style>

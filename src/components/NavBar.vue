@@ -5,7 +5,7 @@
       <div class="w-100" id="colorBottom"></div>
       <b-row align-v="center" id="row">
         <b-col sm="4" :id="`${nameCSS}`"><a href="/index" class="aLabel">MHAA-USNR</a></b-col>
-        <b-col sm="4" id="logo"><a href="/index"><b-img :src="require('../assets/logo.webp')"></b-img></a></b-col>
+        <b-col sm="4" id="logo"><a href="/index"><b-img :src="require('../assets/schoolLogo.png')" style="max-width: 110px"></b-img></a></b-col>
         <b-col sm="4" :id="`${loginCSS}`">
           <div v-show="isLogin">
             <b-avatar :src="this.path" v-show="isLogin"></b-avatar>
