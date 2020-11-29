@@ -43,6 +43,7 @@ import qa from "./views/Q&APage/Q&APage"
 import officers from "@/views/officerPage/components/officers";
 import officersDetail from "@/views/officerPage/components/officersDetail";
 import handleOfficers from "@/views/adminPage/components/handleofficers";
+import Confirm from "@/views/shoppingCartPage/Confirm";
 
 Vue.use(Router);
 
@@ -218,6 +219,10 @@ const router = new Router({
         {
             path:'/payment',
             component: PaymentPage,
+        },
+        {
+            path: '/confirm',
+            component: Confirm,
         },
         {
             path: '/volunteer',

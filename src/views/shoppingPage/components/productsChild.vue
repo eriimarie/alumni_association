@@ -1,19 +1,22 @@
 <template>
-<div>
-
-<b-card v-for="(product, index) in productData" v-bind:key="index">
-  <b-img :src="'http://localhost:3000/'+product.path" class="profile-img" @click="detailProduct(product.path)" style="max-width: 500px"></b-img>
+<div id="box">
+  <p id="top">Market</p>
+  <b-container>
+  <b-card v-for="(product, index) in productData" v-bind:key="index" id="card">
+  <b-img :src="'http://localhost:3000/'+product.path" class="profile-img" @click="detailProduct(product.path)" style="max-width: 200px"></b-img>
   <b-card-text>Product name: {{product.name}}</b-card-text>
   <b-card-text>Unit price: {{product.price}}</b-card-text>
   <b-card-text>Available amount: {{product.amount}}</b-card-text>
-<!--  <b-card-text>Available amount: {{product.path}}</b-card-text>-->
-</b-card>
-<b-pagination
+  </b-card>
+  </b-container>
+  <b-pagination align="center"
     v-model="currentPage"
     :total-rows="rows"
     :per-page="10"
     @click.native="changePage(currentPage)"
-></b-pagination>
+  >
+
+  </b-pagination>
 
 </div>
 </template>
@@ -82,5 +85,27 @@ export default {
 </script>
 
 <style scoped>
+#top{
+  text-align: center;
+  color: white;
+  background-color: #800001;
+  margin-bottom: 30px;
+  font-size: 25px;
+}
+#box{
+  padding: 20px;
+  border: 1px solid;
+  border-radius: 10px;
+  box-shadow: 0 0 10px black;
+  margin: 20px auto;
+  display: table;
+  width: 1000px;
+}
+#card{
+  background-color: #FFEAA7;
+  text-align: center;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+}
 
 </style>

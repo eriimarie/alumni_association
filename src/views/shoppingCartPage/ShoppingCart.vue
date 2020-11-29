@@ -1,25 +1,26 @@
 <template>
-  <div>
+  <div id="box">
+    <p id="top">Shopping Cart</p>
     <div v-show="emptyPage">
       <ul>
-        <li>Your cart is empty now. Let's go shopping.</li>
+        <ul>Your cart is empty now. Let's go shopping.</ul>
 
       </ul>
     </div>
 <!--    {{cart}}-->
-    <b-card v-for="(items,index) in cart" v-bind:key="index">
-      <b-img :src="'http://localhost:3000/'+items.path" class="profile-img" style="max-width: 500px"></b-img>
-      <b-card-text>Your item:{{items.item}}</b-card-text>
-      <b-card-text>Unit price:{{items.price}}</b-card-text>
+    <b-card v-for="(items,index) in cart" v-bind:key="index" id="card">
+      <b-img :src="'http://localhost:3000/'+items.path" class="profile-img" style="max-width: 200px"></b-img>
+      <b-card-text>{{items.item}}</b-card-text>
+      <b-card-text>Unit price: {{items.price}}$/ea</b-card-text>
       <b-form-group label-cols="4" label-cols-lg="2" label="Choose amount:">
           <b-form-input id="input-4" v-model=items.amount min="1" type = "number" :max=items.maxAmount v-on:blur = "changeAmount(index)" required placeholder="Chose amounts.">
 
           </b-form-input>
       </b-form-group>
-      <b-button @click.prevent="deleteItems(index)">Delete item</b-button>
+      <b-button @click.prevent="deleteItems(index)" id="button1">Remove this item from cart</b-button>
 
     </b-card>
-      <b-button href="/order" v-show="!emptyPage">Check out!</b-button>
+      <b-button href="/order" v-show="!emptyPage" id="button2">Check out!</b-button>
 
   </div>
 </template>
@@ -64,15 +65,7 @@ export default {
       this.form.email = this.$cookies.get('email')
       this.form.amount = this.cart[index].amount
       this.form.path = this.cart[index].path
-      alert(this.form.path)
 
-      /**
-       * 给form赋值
-       * email => cookie
-       * amount => cart[index].amount
-       * path => cart[index].path
-       * 上传后端
-       */
 
 
 
@@ -106,5 +99,31 @@ export default {
 </script>
 
 <style scoped>
+#top{
+  text-align: center;
+  color: white;
+  background-color: #800001;
+  margin-bottom: 30px;
+  font-size: 25px;
+}
+#box{
+  padding: 20px;
+  border: 1px solid;
+  border-radius: 10px;
+  box-shadow: 0 0 10px black;
+  margin: 20px auto;
+  display: table;
+  width: 1200px;
+  text-align: center;
+}
+#card{
+  background-color: #FFEAA7;
+  text-align: center;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+}
+#button1,#button2{
+  background-color: #800001;
+}
 
 </style>

@@ -4,10 +4,10 @@
     <div v-for="(news, index) in newsData" v-bind:key="index">
       <b-container>
         <b-row>
-          <b-col lg="4">
+          <b-col lg="4" sm="4">
             <b-img :src="`http://localhost:3000/${news.path}`" class="photo"></b-img>
           </b-col>
-          <b-col lg="8">
+          <b-col lg="8" sm="8">
             <p class="title"><strong>{{news.title}}</strong></p>
             <p id="content">{{news.content}}</p>
             <p class="date">{{news.date}}</p>

@@ -1,9 +1,9 @@
 <template>
-  <div>
-    <b-card>
-      <b-img :src="'http://localhost:3000/'+product.path" class="profile-img" style="max-width: 500px"></b-img>
-      <b-card-text>Product name: {{product.name}}</b-card-text>
-      <b-card-text>Description:{{product.description}}</b-card-text>
+  <div id="box">
+    <p id="top">{{product.name}}</p>
+    <b-card id="card">
+      <b-img :src="'http://localhost:3000/'+product.path" class="profile-img" style="max-width: 200px"></b-img>
+      <b-card-text class="description"><strong>{{product.description}}</strong></b-card-text>
       <b-card-text>Unit price: {{product.price}}</b-card-text>
       <b-card-text>Available amount: {{product.amount}}</b-card-text>
     </b-card>
@@ -12,7 +12,7 @@
       <b-form-input id="amount" v-model="form.amount" type="number" min="1" :max="this.form.maxAmount" placeholder="Enter how many do you want?"
                     required></b-form-input>
     </b-form-group>
-    <b-button variant="primary" type="submit">Add to cart</b-button>
+    <b-button id="button" variant="primary" type="submit">Add to cart</b-button>
     </b-form>
   </div>
 
@@ -67,5 +67,34 @@ export default {
 </script>
 
 <style scoped>
+#top{
+  text-align: center;
+  color: white;
+  background-color: #800001;
+  margin-bottom: 30px;
+  font-size: 25px;
+}
+#box{
+  padding: 20px;
+  border: 1px solid;
+  border-radius: 10px;
+  box-shadow: 0 0 10px black;
+  margin: 20px auto;
+  display: table;
+  width: 1200px;
+  text-align: center;
+}
+#card{
+  background-color: #FFEAA7;
+  text-align: center;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+}
+#button{
+  background-color: #800001;
+}
+.description{
+  font-size: 18px;
+}
 
 </style>

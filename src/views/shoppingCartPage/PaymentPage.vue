@@ -1,5 +1,6 @@
 <template>
   <div id="box">
+    <p id="top">PaymentInfo</p>
     <b-form @submit.prevent="isEnough">
       <b-form-group label-cols="4" label-cols-lg="2" label="Select card type (*):">
         <b-form-select id="cardType"  type="text" :options="VisaOrMaster" required></b-form-select>
@@ -60,8 +61,7 @@
 
       </div>
       <b-row align-h="around">
-        <b-button  variant="primary" type="submit" >Confirm</b-button>
-        <b-button  variant="primary" href="/cart" >Cancel</b-button>
+        <b-button id="button" variant="primary" type="submit">Confirm</b-button>
       </b-row>
 
     </b-form>
@@ -160,23 +160,8 @@ export default {
         }
 
       }
-      alert('success')
-      await this.$router.push('/index')
+      await this.$router.push('/confirm')
 
-      // alert(this.form.email)
-      // await this.$axios.post("/shopping/isEnough", this.form).then(res=>{
-      //   console.log(this.form)
-      //   console.log(res.data)
-      //   for (let k = 0 ; k < res.data.length ; k++){
-      //     this.form.availableAmount[k] = res.data[k].amount
-      //   }
-        // console.log(this.form.availableAmount)
-        // console.log(this.form.amount)
-        // if (this.form.amount<= availableAmount){
-        //
-        // }
-
-      // })
 
     },
 
@@ -196,8 +181,20 @@ export default {
   border: 1px solid #ccc;
   border-radius: 10px;
   box-shadow: 0 0 10px #eee;
-  margin: 10px auto;
+  margin: 20px auto;
   display: table;
+  width: 1200px;
+  text-align: center;
+}
+#button{
+  background-color: #800001;
+}
+#top{
+  text-align: center;
+  color: white;
+  background-color: #800001;
+  margin-bottom: 30px;
+  font-size: 25px;
 }
 
 

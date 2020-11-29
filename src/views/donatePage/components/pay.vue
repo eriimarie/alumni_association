@@ -1,5 +1,6 @@
 <template>
   <div id="box">
+    <p id="top">PaymentInfo</p>
     <b-form @submit.prevent="onSubmit">
       <b-form-group label-cols="4" label-cols-lg="2" label="Select card type (*):">
         <b-form-select id="cardType" v-model="form.card" type="text" :options="VisaOrMaster" required></b-form-select>
@@ -49,7 +50,7 @@
 
       </div>
       <b-row align-h="around">
-        <b-button type="submit" variant="primary" >Confirm</b-button>
+        <b-button type="submit" variant="primary" id="button" >Confirm</b-button>
       </b-row>
 
     </b-form>
@@ -103,8 +104,20 @@ export default {
   border: 1px solid #ccc;
   border-radius: 10px;
   box-shadow: 0 0 10px #eee;
-  margin: 10px auto;
+  margin: 20px auto;
   display: table;
+  width: 1200px;
+  text-align: center;
+}
+#button{
+  background-color: #800001;
+}
+#top{
+  text-align: center;
+  color: white;
+  background-color: #800001;
+  margin-bottom: 30px;
+  font-size: 25px;
 }
 
 

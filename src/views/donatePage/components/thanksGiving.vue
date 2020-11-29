@@ -1,8 +1,9 @@
 <template>
   <div id="box">
-    <b-card>
+    <b-card id="card">
       <b-img :src="require('../../../assets/thanksgiving.png')"></b-img>
-      <b-card-text>The system will display, “Thank you for your Donation! Every penny counts!
+      <b-card-text></b-card-text>
+      <b-card-text>Thank you for your Donation! Every penny counts!
         Thank you for helping out your Alumni Association. We are glad to have you!</b-card-text>
 
     </b-card>
@@ -28,6 +29,12 @@ export default {
   box-shadow: 0 0 10px #eee;
   margin: 10px auto;
   display: table;
+  width: 1200px;
+}
+#card{
+  background-color: #FFEAA7;
+  border: #FFEAA7;
+  text-align: center;
 }
 
 
