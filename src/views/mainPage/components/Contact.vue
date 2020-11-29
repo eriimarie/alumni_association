@@ -7,6 +7,8 @@
       <b-col sm="3" class="marginBottom"><p><b class="purple">EMAIL ADDRESS</b><br><span>hello@reallygreatsite.com</span></p></b-col>
       <b-col sm="3" class="marginBottom"><p><b class="purple">MAILING ADDRESS</b><br><span>Maggotty St. Elizabeth</span></p></b-col>
     </b-container>
+    <a href="/donate"><b-img id="photo" :src="require('@/assets/mainDonate.jpg')" fluid alt="contact image"></b-img></a>
+
   </div>
 </template>
 
@@ -26,6 +28,9 @@ name: "Contact"
   }
   span{
     font-size: 15px;
+  }
+  #photo{
+    margin-top: 20px;
   }
 
 </style>

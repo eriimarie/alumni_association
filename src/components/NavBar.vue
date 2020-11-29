@@ -11,6 +11,7 @@
             <b-avatar :src="this.path" v-show="isLogin"></b-avatar>
             <b-dropdown :text="`${firstName}`" variant="transparent">
               <b-dropdown-item href="/profile">Profile</b-dropdown-item>
+              <b-dropdown-item href="/donate">Donate</b-dropdown-item>
               <b-dropdown-item href="/volunteer">Volunteer</b-dropdown-item>
               <b-dropdown-item href="/shopping">Shop</b-dropdown-item>
               <b-dropdown-item :href="this.cart">Cart</b-dropdown-item>

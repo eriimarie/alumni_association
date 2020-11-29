@@ -29,6 +29,7 @@
             <p><a href="/history">History</a></p>
             <p><a href="/events">Events</a></p>
             <p><a href="/officer">Officers</a></p>
+            <p><a href="/donate">Donate</a></p>
 
             <p></p>
           </b-col>
