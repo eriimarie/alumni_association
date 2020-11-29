@@ -17,7 +17,32 @@ const storage = multer.diskStorage({
         cb(null, `product_${Date.now()}.jpg`)
     }
 })
+const storageNews = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, './upload')
+    },
+    filename: function (req, file, cb) {
+        cb(null, `news_${Date.now()}.jpg`)
+    }
+})
 const uploadPhoto = multer({storage: storage})
+const uploadNewsPhoto = multer({storage: storageNews})
+
+router.post('/addNewsPhoto', uploadNewsPhoto.single('news_photo'), async (req,res)=>{
+    console.log('req.file', req.file.path)
+    console.log('name', req.body.name)
+    const newsPhoto = await career.findOne({title: req.body.name})
+    console.log(newsPhoto)
+        const myQuery = {title: req.body.name}
+        const newValues = {$set: {path: req.file.path}}
+        await career.updateOne(myQuery, newValues)
+        fs.unlink(newsPhoto.path, (err)=>{
+            if (err){
+                console.log(err)
+            }
+        })
+        return res.send(req.file.path)
+})
 
 router.post('/addCareer', async (req, res)=>{
     await new career(req.body).save()

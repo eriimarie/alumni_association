@@ -155,7 +155,7 @@ const router = new Router({
             component: newsPage,
         },
         {
-            path: '/news/:id',
+            path: '/news:id',
             component: detailNews
         },
         {

@@ -1,14 +1,24 @@
 <template>
-  <div>
-    <ul>
-      <li v-for="news in newsData" v-bind:key="news">
-        <p @click="detailEvent(news.sortDate)">{{news.title}}</p>
-        <p>{{news.content}}</p>
-        <p>{{news.date}}</p>
-      </li>
-    </ul>
+  <div id="box">
+    <p id="top">Alumni News</p>
+    <div v-for="(news, index) in newsData" v-bind:key="index">
+      <b-container>
+        <b-row>
+          <b-col lg="4">
+            <b-img :src="`http://localhost:3000/${news.path}`" class="photo"></b-img>
+          </b-col>
+          <b-col lg="8">
+            <p class="title"><strong>{{news.title}}</strong></p>
+            <p id="content">{{news.content}}</p>
+            <p class="date">{{news.date}}</p>
+            <b-button class="button" size="sm" @click="detailEvent(news.sortDate)">Read More</b-button>
+          </b-col>
+        </b-row>
+      </b-container>
 
 
+      <hr>
+    </div>
     <b-pagination
         align="center"
         v-model="currentPage"
@@ -16,7 +26,6 @@
         :per-page="10"
         @click.native="changePage(currentPage)"
     ></b-pagination>
-
   </div>
 </template>
 
@@ -39,7 +48,7 @@ export default {
   methods:{
     detailEvent(sortDate) {
       this.$router.push({
-        path:'news/:id',
+        path:'news:id',
         query:{
           id: sortDate
         }
@@ -66,7 +75,6 @@ export default {
         for (let i = 0; i < arrayLength; i++){
           this.newsData[i] = this.pageData[i]
         }
-        console.log(this.newsData)
       })
     }
   },
@@ -82,5 +90,48 @@ export default {
 </script>
 
 <style scoped>
-
+#box{
+  padding: 20px;
+  border: 1px solid;
+  border-radius: 10px;
+  box-shadow: 0 0 10px black;
+  margin: 20px auto;
+  display: table;
+}
+ul{
+  list-style: none;
+}
+p{
+  padding: 0;
+  margin: 0;
+}
+#content{
+  display: block;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  margin-top: 10px;
+}
+.photo{
+  max-width: 260px;
+  max-height: 170px;
+}
+#top{
+  text-align: center;
+  color: white;
+  background-color: #800001;
+  margin-bottom: 30px;
+  font-size: 25px;
+}
+.button{
+  margin-top: 10px;
+  background-color: #800001;
+}
+.date{
+  color: gray;
+  margin-top: 10px;
+}
+.title{
+  font-size: 18px;
+}
 </style>

@@ -24,7 +24,7 @@
 
     <div v-show="isShowCrop">
       <div size="120" class="user" style="margin: 0 auto">
-        <b-icon class="icon primary white--text" @click="$refs.FileInput.click()">add picutre</b-icon>
+        <b-icon class="icon primary white--text" @click="$refs.FileInput.click()">add picture</b-icon>
         <input ref="FileInput" type="file" style="display: none;" @change="onFileSelect" />
       </div>
       <b-container v-model="dialog" width="500">

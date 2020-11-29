@@ -3,24 +3,43 @@
     <div>
       <b-form @submit.prevent="submitAdd">
         <h4>Add news</h4>
-        <b-form-group label-cols="4" label-cols-lg="2" label="title:">
-          <b-form-input v-model="addForm.title" type="text" required placeholder="Enter title"></b-form-input>
-        </b-form-group>
-        <b-form-group label-cols="4" label-cols-lg="2" label="link:">
-          <b-form-textarea v-model="addForm.content" required placeholder="Enter content" rows="5"></b-form-textarea>
-        </b-form-group>
-        <b-button class="button" type="submit">Add Career Link</b-button>
+        <div v-show="isShowAdd">
+          <b-form-group label-cols="4" label-cols-lg="2" label="Title:">
+            <b-form-input v-model="addForm.title" type="text" required placeholder="Enter title"></b-form-input>
+          </b-form-group>
+          <b-form-group label-cols="4" label-cols-lg="2" label="Content:">
+            <b-form-textarea v-model="addForm.content" required placeholder="Enter content" rows="5"></b-form-textarea>
+          </b-form-group>
+          <b-button class="button" type="submit">Add News Content</b-button>
+        </div>
       </b-form>
       <hr>
+    </div>
+
+    <div v-show="isShowCrop">
+      <div size="120" class="user" style="margin: 0 auto">
+        <b-icon class="icon primary white--text" @click="$refs.FileInput.click()">add picture</b-icon>
+        <input ref="FileInput" type="file" style="display: none;" @change="onFileSelect" />
+      </div>
+      <b-container v-model="dialog" width="500">
+        <b-card>
+          <b-card-text>
+            <VueCropper v-show="selectedFile" ref="cropper" :src="selectedFile" alt="Source Image"></VueCropper>
+          </b-card-text>
+          <b-card>
+            <b-btn class="button primary" @click="savePhoto() (dialog = false)">Crop</b-btn>
+          </b-card>
+        </b-card>
+      </b-container>
     </div>
 
     <div class="margin">
       <b-form>
         <h4>Find news</h4>
-        <b-form-group label-cols="4" label-cols-lg="2" label="title:">
+        <b-form-group label-cols="4" label-cols-lg="2" label="Title:">
           <b-form-input id="title" v-model="findTitle" type="text" required placeholder="Enter title"></b-form-input>
         </b-form-group>
-        <b-button class="button" @click.prevent="submitFind(findTitle)">Find title</b-button>
+        <b-button class="button" @click.prevent="submitFind(findTitle)">Find news</b-button>
       </b-form>
       <div v-show="showChange[10]">
         <ul>
@@ -30,7 +49,7 @@
         <button class="changeButton" @click="showFindChange = !showFindChange">change</button>
       </div>
         <b-form @submit.prevent="submitChange" v-show="showFindChange">
-          <b-form-group label-cols="4" label-cols-lg="2" label="link:">
+          <b-form-group label-cols="4" label-cols-lg="2" label="Title:">
             <b-form-input v-model="changeForm.title" type="text" required></b-form-input>
           </b-form-group>
           <b-form-group label-cols="4" label-cols-lg="2" label="content:">
@@ -43,7 +62,7 @@
     </div>
 
     <div class="margin">
-      <h4>news list</h4>
+      <h4>News list</h4>
       <ul>
         <li v-for="(career, index) in careerData" :key="index">
           Title: <b>{{career.title}}</b>
@@ -51,7 +70,7 @@
           <button class="deleteButton" @click.prevent="deleteCareer(career.sortDate)">delete</button>
           <button class="changeButton" @click.prevent="clickChangeCareer(index, career.title, career.content, career.sortDate, career.oldSortDate)">change</button>
           <b-form @submit.prevent="submitChange" v-show="showChange[index]">
-            <b-form-group label-cols="4" label-cols-lg="2" label="link:">
+            <b-form-group label-cols="4" label-cols-lg="2" label="Title:">
               <b-form-input v-model="changeForm.title" type="text" required></b-form-input>
             </b-form-group>
             <b-form-group label-cols="4" label-cols-lg="2" label="content:">
@@ -76,19 +95,33 @@
 </template>
 
 <script>
+import VueCropper from "vue-cropperjs";
+
 /**
  * 数据库：增删改查
  */
 const url = '/resources/news'
 export default {
+  components: { VueCropper },
+  props: ['image_name'],
   data() {
     return{
+      mime_type: '',
+      cropedImage: '',
+      autoCrop: false,
+      selectedFile: '',
+      image: '',
+      dialog: false,
+      files: '',
+
       showChange: [false, false, false, false, false, false, false, false, false, false, false],
       currentPage: 1,
       careerData: [],
       pageData: [],
       showFindChange: false,
       findTitle: '',
+      isShowAdd: true,
+      isShowCrop: false,
 
       changeForm: {
         title: '',
@@ -102,6 +135,8 @@ export default {
         title: '',
         content: '',
         sortDate: '',
+        date: '',
+        path: '',
       }
     }
   },
@@ -121,6 +156,23 @@ export default {
         }
         console.log()
       })
+    },
+
+    onFileSelect(e) {
+      const file = e.target.files[0]
+      this.mime_type = file.type
+      console.log(this.mime_type)
+      if (typeof FileReader === 'function') {
+        this.dialog = true
+        const reader = new FileReader()
+        reader.onload = (event) => {
+          this.selectedFile = event.target.result
+          this.$refs.cropper.replace(this.selectedFile)
+        }
+        reader.readAsDataURL(file)
+      } else {
+        alert('Sorry, FileReader API not supported')
+      }
     },
 
     async submitFind() {
@@ -159,11 +211,36 @@ export default {
     },
 
     submitAdd() {
+      const today = new Date()
       this.addForm.sortDate = Date.now()
+      const dd = String(today.getDate()).padStart(2, '0')
+      const mm = String(today.getMonth() + 1).padStart(2, '0')
+      const yyyy = today.getFullYear()
+      this.addForm.date = yyyy + '-' + mm + '-' + dd
       this.$axios.post('/admin/addCareer', this.addForm).then(res=>{
         console.log(res.data)
-        this.$router.go(0)
+        alert("Please add picture")
+        this.isShowAdd = false
+        this.isShowCrop = true
       })
+    },
+
+    savePhoto() {
+      this.cropedImage = this.$refs.cropper.getCroppedCanvas().toDataURL()
+      this.$refs.cropper.getCroppedCanvas().toBlob((blob) => {
+        const formData = new FormData()
+        formData.append('news_photo', blob, 'name.jpeg')
+        alert("add news_photo")
+        formData.append('name', this.addForm.title)
+        alert("add name")
+        this.$axios.post('/admin/addNewsPhoto', formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          }
+        }).then(res=>{
+          console.log(res.data)
+          this.$router.go(0)
+        })}, this.mime_type)
     },
 
     async submitChange(){
@@ -245,6 +322,13 @@ hr{
   background-color: #CEC094;
   color: #800001;
   margin-left: 10px;
+}
+.icon{
+  background-color: #800001;
+  color: white;
+  font-size: 20px;
+  border: 1px solid #800001;
+  border-radius: 5px;
 }
 ul{
   list-style: none;
