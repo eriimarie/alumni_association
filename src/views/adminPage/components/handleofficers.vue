@@ -190,9 +190,8 @@ export default {
       this.$refs.cropper.getCroppedCanvas().toBlob((blob) => {
         const formData = new FormData()
         formData.append('officer_photo', blob, 'name.jpeg')
-        alert("add officer_photo")
         formData.append('name', this.addOfficer.name)
-        alert("add name")
+        alert('success')
         this.$axios.post('/officer/addOfficerPhoto', formData, {
           headers: {
             'Content-Type': 'multipart/form-data'
