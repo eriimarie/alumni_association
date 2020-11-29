@@ -40,7 +40,7 @@ router.post('/changePassword', async (req, res)=>{
 
 router.post('/orders', async (req, res)=>{
     console.log(req.body)
-    const findOrders = await orders.find({email: req.body.email})
+    const findOrders = await orders.find({email: req.body.email}).sort({orderNumber: -1})
     console.log(findOrders)
     res.send(findOrders)
 
