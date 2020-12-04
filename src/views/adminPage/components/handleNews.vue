@@ -247,7 +247,7 @@ export default {
         this.changeForm.sortDate = Date.now()
       }
       await this.$axios.post('/admin/changeCareer', this.changeForm).then(res=>{
-        alert(res.data)
+        console.log(res.data)
         this.$router.go(0)
       })
     },

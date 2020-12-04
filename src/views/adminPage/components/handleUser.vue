@@ -160,7 +160,7 @@ export default {
 
     async submitChange() {
       await this.$axios.post('/admin/updateUser', this.changeForm).then(res=>{
-        alert(res.data)
+        console.log(res.data)
         this.$router.go(0)
       })
     },
@@ -169,7 +169,7 @@ export default {
       let answer = window.confirm("You you sure?")
       if (answer){
         await this.$axios.post('/admin/deleteEvent', {email: email}).then(res=>{
-          alert(res.data)
+          console.log(res.data)
           this.$router.go(0)
         })
       }
