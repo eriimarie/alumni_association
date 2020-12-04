@@ -286,6 +286,12 @@ router.beforeEach((to, from, next) => {
             window.alert('You already signed in')
             next('/index')
         }
+    }else if (to.path.includes('register')){
+        if (window.$cookies.get('email') === null){
+            next()
+        } else {
+            next('/index')
+        }
     }
     next()
 })
